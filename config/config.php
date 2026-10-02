@@ -43,3 +43,10 @@ function e(string $texto): string
 {
     return htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
 }
+
+function largo(string $texto): int
+{
+    return function_exists('mb_strlen')
+        ? mb_strlen($texto, 'UTF-8')
+        : count(preg_split('//u', $texto, -1, PREG_SPLIT_NO_EMPTY));
+}
