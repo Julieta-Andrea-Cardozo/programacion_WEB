@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Blog de Barismo & Café: notas sobre técnica, orígenes y métodos de preparación de café."
+    />
+    <meta name="author" content="Julieta Andrea Cardozo" />
+    <meta name="theme-color" content="#5a2a12" />
+    <title>Blog | Barismo &amp; Café</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header>
+      <nav
+        class="navbar navbar-expand-xl navbar-barismo sticky-top"
+        aria-label="Navegación principal"
+      >
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Barismo &amp; Café</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal"
+            aria-expanded="false"
+            aria-label="Abrir menú de navegación"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav ms-auto gap-xl-2">
+              <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+              <li class="nav-item"><a class="nav-link" href="menu.html">Menú</a></li>
+              <li class="nav-item"><a class="nav-link" href="galeria.html">Galería</a></li>
+              <li class="nav-item"><a class="nav-link" href="equipo.html">Equipo</a></li>
+              <li class="nav-item"><a class="nav-link" href="talleres.html">Talleres</a></li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="blog.html">Blog</a>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="tienda.html">Tienda</a></li>
+              <li class="nav-item"><a class="nav-link" href="tecnicas.html">Técnicas</a></li>
+              <li class="nav-item"><a class="nav-link" href="ubicacion.html">Ubicación</a></li>
+              <li class="nav-item"><a class="nav-link" href="contacto.html">Contacto</a></li>
+            </ul>
+            <a
+              class="btn btn-borde text-nowrap ms-xl-3 mt-2 mt-xl-0"
+              href="tienda.html"
+              aria-label="Ver carrito de compras"
+            >
+              Carrito
+              <span class="badge carrito-contador" data-carrito-contador>0</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="contenido">
+      <section class="seccion" aria-labelledby="titulo-blog">
+        <div class="container">
+          <p class="eyebrow">Blog</p>
+          <h1 class="titulo-seccion" id="titulo-blog">Notas Destacadas</h1>
+          <p class="subtitulo">Cultura, técnica y pasión por el café</p>
+          <div class="divisor" aria-hidden="true"></div>
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <article class="card tarjeta">
+                <img
+                  src="img/blog-1.jpg"
+                  alt="Tazas de café con arte latte entre plantas"
+                  width="700"
+                  height="450"
+                  loading="lazy"
+                />
+                <div class="card-body p-4">
+                  <p class="mb-2">
+                    <span class="etiqueta etiqueta-bordo">Técnica</span>
+                    <time class="meta ms-2">3 sep 2026</time>
+                  </p>
+                  <h3 class="card-title h5">
+                    Por qué la temperatura del agua cambia todo en el espresso
+                  </h3>
+                  <p class="card-text">
+                    La diferencia entre 88 °C y 94 °C puede ser la línea entre una extracción
+                    brillante y un café amargo.
+                  </p>
+                  <div class="collapse" id="nota-1">
+                    <p>
+                      Una temperatura baja sub-extrae los compuestos ácidos y deja un café plano;
+                      una muy alta extrae taninos amargos. En nuestra barra trabajamos entre 92 °C y
+                      93 °C para cafés de tueste medio y ajustamos un grado según el origen.
+                    </p>
+                  </div>
+                  <button
+                    class="btn btn-borde"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#nota-1"
+                    aria-expanded="false"
+                    aria-controls="nota-1"
+                  >
+                    Leer nota →
+                  </button>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card tarjeta">
+                <img
+                  src="img/blog-2.jpg"
+                  alt="Taza de café sobre plato celeste"
+                  width="700"
+                  height="450"
+                  loading="lazy"
+                />
+                <div class="card-body p-4">
+                  <p class="mb-2">
+                    <span class="etiqueta etiqueta-bordo">Orígenes</span>
+                    <time class="meta ms-2">20 ago 2026</time>
+                  </p>
+                  <h3 class="card-title h5">
+                    Etiopía natural: el café que sabe a frambuesa y miel
+                  </h3>
+                  <p class="card-text">
+                    Los cafés de proceso natural de Guji tienen perfiles de sabor únicos. Te
+                    contamos cómo se producen.
+                  </p>
+                  <div class="collapse" id="nota-2">
+                    <p>
+                      En el proceso natural la cereza se seca entera al sol durante semanas. Los
+                      azúcares de la fruta migran al grano y aportan notas a frutos rojos, miel y
+                      vino. Es un proceso lento que requiere mucho cuidado para evitar
+                      fermentaciones indeseadas.
+                    </p>
+                  </div>
+                  <button
+                    class="btn btn-borde"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#nota-2"
+                    aria-expanded="false"
+                    aria-controls="nota-2"
+                  >
+                    Leer nota →
+                  </button>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card tarjeta">
+                <img
+                  src="img/blog-3.jpg"
+                  alt="Barista preparando café de filtro"
+                  width="700"
+                  height="450"
+                  loading="lazy"
+                />
+                <div class="card-body p-4">
+                  <p class="mb-2">
+                    <span class="etiqueta etiqueta-bordo">Métodos</span>
+                    <time class="meta ms-2">5 ago 2026</time>
+                  </p>
+                  <h3 class="card-title h5">V60, Chemex o prensa francesa: ¿cuál elegir?</h3>
+                  <p class="card-text">
+                    Cada método de filtrado resalta características distintas del café. Una guía
+                    rápida para elegir el tuyo.
+                  </p>
+                  <div class="collapse" id="nota-3">
+                    <p>
+                      La V60 da tazas limpias y brillantes, la Chemex aporta un cuerpo más ligero
+                      por su filtro grueso y la prensa francesa ofrece más cuerpo y aceites.
+                      Recomendamos empezar con una relación 1:16 y ajustar según tu gusto.
+                    </p>
+                  </div>
+                  <button
+                    class="btn btn-borde"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#nota-3"
+                    aria-expanded="false"
+                    aria-controls="nota-3"
+                  >
+                    Leer nota →
+                  </button>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer-barismo">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h2 class="h4 fst-italic">Barismo &amp; Café</h2>
+            <p>
+              Café de especialidad, arte latte y formación de baristas en el corazón de Palermo.
+            </p>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h3>Explorar</h3>
+            <ul class="list-unstyled">
+              <li><a href="menu.html">Menú</a></li>
+              <li><a href="galeria.html">Galería</a></li>
+              <li><a href="talleres.html">Talleres</a></li>
+              <li><a href="blog.html">Blog</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-2">
+            <h3>Comprar</h3>
+            <ul class="list-unstyled">
+              <li><a href="tienda.html">Tienda</a></li>
+              <li><a href="tecnicas.html">Técnicas</a></li>
+              <li><a href="ubicacion.html">Ubicación</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h3>Contacto</h3>
+            <address class="mb-0">
+              Thames 1650, Palermo · CABA
+              <br />
+              <a href="tel:+541148321650">+54 11 4832-1650</a>
+              <br />
+              <a href="mailto:hola@barismo.com.ar">hola@barismo.com.ar</a>
+              <br />
+              <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+                Instagram @barismo_arte
+              </a>
+            </address>
+          </div>
+        </div>
+        <p class="copy mt-5 pt-3 mb-0 text-center">
+          ©
+          <span data-anio>2026</span>
+          Barismo &amp; Café · Trabajo práctico de Programación Web · Julieta Andrea Cardozo
+        </p>
+      </div>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
