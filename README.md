@@ -4,6 +4,93 @@ Trabajo práctico de Programación Web. Tema elegido: sitio web para mostrar dat
 
 > El tema no se puede cambiar en el transcurso del año. Cualquier modificación debe reflejarse en toda la documentación.
 
+## Barismo & Café — Maqueta web (TP N° 3)
+
+Sitio estático de **Barismo & Café**, una cafetería de especialidad dedicada al barismo, al arte
+latte y a la formación de baristas. Las 10 vistas se maquetaron en HTML5 + Bootstrap 5 a partir
+de los wireframes de Figma.
+
+- **Diseño en Figma:** [Site Map and Wireframe](https://www.figma.com/make/uKNA9mewDLy8gzO9RdJhTZ/Site-Map-and-Wireframe?t=ofV6AHS95d6uyXOT-1&preview-route=%2F%23galer%25C3%ADa)
+- **Sitio publicado (GitHub Pages):** https://julieta-andrea-cardozo.github.io/programacion_WEB/
+- **Auditoría de Lighthouse y Prettier:** [docs/auditoria-lighthouse.md](docs/auditoria-lighthouse.md)
+
+### Tecnologías
+
+| Tecnología | Uso |
+| --- | --- |
+| HTML5 semántico | Estructura de las 10 vistas |
+| CSS3 (variables, grid, flexbox) | Estilos propios en `css/styles.css` |
+| Bootstrap 5.3.3 (CDN) | Grilla responsive, navbar colapsable, pestañas, collapse y formularios |
+| JavaScript | Carrito con `localStorage` y validación del formulario (`js/main.js`) |
+| Google Fonts | Playfair Display, Inter y DM Mono |
+| Prettier 3 | Formateo del código |
+| Lighthouse | Auditoría de accesibilidad, rendimiento, buenas prácticas y SEO |
+| Git + GitHub + GitHub Pages | Control de versiones y despliegue |
+
+### Vistas
+
+| # | Vista | Archivo | Contenido |
+| - | ----- | ------- | --------- |
+| 1 | Inicio | `index.html` | Hero, sobre nosotros, accesos destacados y testimonios |
+| 2 | Menú | `menu.html` | Cafés de especialidad y tabla de acompañamientos |
+| 3 | Galería | `galeria.html` | Galería de diseños de arte latte |
+| 4 | Equipo | `equipo.html` | Perfiles de los baristas |
+| 5 | Talleres | `talleres.html` | Talleres de barismo con nivel, fecha y precio |
+| 6 | Blog | `blog.html` | Notas destacadas desplegables |
+| 7 | Tienda | `tienda.html` | Café en grano e insumos para cafetera con carrito |
+| 8 | Técnicas | `tecnicas.html` | Pestañas con el paso a paso de corazón, tulipán y rosetta |
+| 9 | Ubicación | `ubicacion.html` | Mapa embebido, horarios y datos de contacto |
+| 10 | Contacto | `contacto.html` | Formulario con validación y casillas de contacto |
+
+### Estructura del proyecto
+
+```
+programacion_WEB/
+├── index.html … contacto.html   # 10 vistas
+├── css/styles.css               # estilos personalizados
+├── js/main.js                   # interacciones
+├── img/                         # imágenes y favicon
+├── docs/                        # auditoría Lighthouse y capturas
+├── .prettierrc / .prettierignore
+└── package.json                 # scripts de Prettier
+```
+
+### Ejecución local
+
+```bash
+git clone https://github.com/Julieta-Andrea-Cardozo/programacion_WEB.git
+cd programacion_WEB
+npm install            # instala Prettier (opcional)
+python3 -m http.server 8080
+# abrir http://localhost:8080
+```
+
+También se puede abrir `index.html` directamente en el navegador o usar *Live Server* de VS Code.
+
+### Flujo de trabajo con Git
+
+1. `git init` y estructura base `css/`, `js/`, `img/`.
+2. Rama de trabajo `feature/maquetacion`.
+3. Maquetación de las 10 vistas con Bootstrap y estilos propios.
+4. Formateo con Prettier y auditoría de Lighthouse (ver `docs/auditoria-lighthouse.md`).
+5. `git push origin feature/maquetacion` y Pull Request hacia `main`.
+6. Merge del Pull Request.
+7. Despliegue en GitHub Pages.
+
+### Capturas
+
+| Inicio | Menú |
+| --- | --- |
+| ![Inicio](docs/capturas/index.png) | ![Menú](docs/capturas/menu.png) |
+| **Galería** | **Tienda** |
+| ![Galería](docs/capturas/galeria.png) | ![Tienda](docs/capturas/tienda.png) |
+| **Técnicas** | **Contacto** |
+| ![Técnicas](docs/capturas/tecnicas.png) | ![Contacto](docs/capturas/contacto.png) |
+
+---
+
+# Documentación de diseño (TP anteriores)
+
 ## 1. Intereses personales
 
 Me interesa en particular todo lo relacionado con el café de especialidad: la preparación del espresso, la textura de la leche y el arte latte. También me gusta el diseño gráfico aplicado a lo cotidiano (menús, cartelería, identidad visual de un local) y estoy en contacto permanente con la cultura de internet y las redes sociales.
