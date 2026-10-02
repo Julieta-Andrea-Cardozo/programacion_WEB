@@ -40,13 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const formulario = document.getElementById("form-contacto");
   if (formulario) {
     formulario.addEventListener("submit", (evento) => {
-      evento.preventDefault();
       const ok = formulario.querySelector("[data-form-ok]");
       if (!formulario.checkValidity()) {
+        evento.preventDefault();
         formulario.classList.add("was-validated");
         ok.classList.add("d-none");
         return;
       }
+      if (formulario.hasAttribute("data-servidor")) {
+        return;
+      }
+      evento.preventDefault();
       formulario.classList.remove("was-validated");
       formulario.reset();
       ok.classList.remove("d-none");
