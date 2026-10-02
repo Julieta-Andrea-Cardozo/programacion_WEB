@@ -3,3 +3,4 @@ img/
 *.docx
 node_modules/
 package-lock.json
+docs/lighthouse/
