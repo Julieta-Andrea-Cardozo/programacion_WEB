@@ -16,8 +16,8 @@ $errores = [];
 $enviado = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    foreach ($datos as $campo => $valor) {
-        $datos[$campo] = trim((string) ($_POST[$campo] ?? ''));
+    foreach (array_keys($datos) as $campo) {
+        $datos[$campo] = trim((string) (filter_input(INPUT_POST, $campo) ?? ''));
     }
 
     if (largo($datos['nombre']) < 3) {

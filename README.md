@@ -182,6 +182,58 @@ Buenas prácticas y SEO.
 | **HTML generado por el servidor**                                  | **`.env` bloqueado (403)**                                  |
 | ![Código fuente](docs/capturas/php/codigo-fuente-tienda.png)       | ![.env bloqueado](docs/capturas/php/env-bloqueado.png)      |
 
+## Procesamiento de formularios con POST y GET (Clase 5)
+
+Todo el desarrollo de esta entrega está en la carpeta [`clase5/`](clase5/), que contiene el sitio
+completo en PHP. Se incorporaron dos interacciones de formulario que capturan y procesan datos en
+el servidor, con sanitización estricta para prevenir XSS (OWASP Top 10).
+
+### Formulario POST — `contacto.php`
+
+Formulario de contacto (nombre, email, asunto y mensaje) que se envía por `POST` a la misma vista:
+
+- **Sanitización:** cada campo se lee con `filter_input(INPUT_POST, ...)` y `trim()`, y toda la
+  salida se escapa con `htmlspecialchars()` (función `e()` de `config/config.php`), por lo que un
+  envío como `<script>alert(1)</script>` se muestra como texto y nunca se ejecuta.
+- **Validación en el servidor:** nombre con mínimo 3 letras, email con
+  `filter_var(..., FILTER_VALIDATE_EMAIL)`, asunto contra una lista blanca y mensaje con mínimo
+  10 caracteres.
+- **Retroalimentación:** los errores se muestran debajo de cada campo y en un aviso general; si el
+  envío es válido aparece un mensaje de éxito con el nombre recibido.
+- **Persistencia:** ante errores, los campos conservan lo que el usuario ya había cargado.
+
+### Formulario GET — buscador en `tienda.php`
+
+Buscador de productos (`?q=`) con filtro por categoría (`?tipo=`), que viaja por `GET` en la URL y
+permite compartir el enlace de la búsqueda:
+
+- **Sanitización:** `q` y `tipo` se leen con `filter_input(INPUT_GET, ...)` y `trim()`; el término
+  se muestra escapado en el input y en el mensaje de resultado, por lo que no es posible inyectar
+  scripts (ver captura de XSS).
+- **Validación en el servidor:** `q` no puede llegar vacío ni superar los 60 caracteres; `tipo` se
+  valida contra una lista blanca (`todo`, `granos`, `insumos`).
+- **Retroalimentación:** informa cuántos productos se encontraron para el término, o un aviso cuando
+  no hay coincidencias.
+- **Persistencia:** el término buscado y la categoría elegida quedan cargados en el formulario.
+
+### Capturas
+
+| Búsqueda con resultados (GET)                                    | Sin resultados                                                            |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| ![Búsqueda](clase5/docs/capturas/busqueda.png)                   | ![Sin resultados](clase5/docs/capturas/busqueda-sin-resultados.png)       |
+| **XSS sanitizado: el script se muestra como texto**              | **Errores de validación con datos conservados (POST)**                    |
+| ![XSS sanitizado](clase5/docs/capturas/busqueda-xss.png)         | ![Errores](clase5/docs/capturas/contacto-errores.png)                     |
+| **Envío exitoso (POST)**                                         |                                                                           |
+| ![Éxito](clase5/docs/capturas/contacto-ok.png)                   |                                                                           |
+
+### Ejecución local
+
+```bash
+cd clase5
+cp .env.example .env   # en Windows: copy .env.example .env
+php -S localhost:8000  # abrir http://localhost:8000
+```
+
 ---
 
 # Documentación de diseño (TP anteriores)
