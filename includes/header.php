@@ -3,6 +3,13 @@ require_once __DIR__ . '/../config/config.php';
 
 $titulo_pagina = $titulo_pagina ?? 'Inicio';
 $descripcion_pagina = $descripcion_pagina ?? 'Cafetería de especialidad, arte latte y talleres de barismo.';
+
+// Prefijo para que las vistas dentro de subcarpetas (admin/) encuentren los recursos.
+$dir_raiz = dirname(__DIR__);
+$dir_actual = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
+$base = $dir_actual === $dir_raiz
+    ? ''
+    : str_repeat('../', substr_count(trim(substr($dir_actual, strlen($dir_raiz)), '/'), '/') + 1);
 ?>
 <!doctype html>
 <html lang="es">
@@ -25,8 +32,8 @@ $descripcion_pagina = $descripcion_pagina ?? 'Cafetería de especialidad, arte l
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="<?= $base ?>img/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="<?= $base ?>css/styles.css" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>

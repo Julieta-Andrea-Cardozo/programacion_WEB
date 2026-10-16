@@ -234,6 +234,57 @@ cp .env.example .env   # en Windows: copy .env.example .env
 php -S localhost:8000  # abrir http://localhost:8000
 ```
 
+## Persistencia PHP–MySQL: CRUD de productos (Clase 7)
+
+Todo el desarrollo de esta entrega está en la carpeta [`clase7/`](clase7/), que contiene el sitio
+completo en PHP más el módulo de administración conectado a MySQL. Se implementó un CRUD sobre la
+tabla `productos` (granos e insumos de la tienda), integrado al layout del sitio y accesible desde el
+enlace **Administrar** del footer.
+
+### Componentes
+
+| Componente              | Archivo                                     | Qué hace                                                                                    |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Conexión segura         | `config/conexion.php`                       | Instancia PDO con `try-catch` (`PDOException`), credenciales desde `.env`                     |
+| Listado (Read)          | `admin/index.php`                           | Tabla con todos los productos, consulta preparada `SELECT`, avisos de alta/baja/modificación |
+| Alta (Create)           | `admin/crear.php`                           | Formulario validado en el servidor + `INSERT` preparado; redirige con `?status=created`      |
+| Edición (Update)        | `admin/editar.php`                          | Carga el registro con `SELECT` preparado por `id` y guarda con `UPDATE` preparado            |
+| Baja (Delete)           | `admin/eliminar.php`                        | Solo acepta `POST` con `id` entero validado; `DELETE` preparado; los enlaces GET no borran   |
+| Formulario compartido   | `admin/formulario.php` + `admin/funciones.php` | Campos, validación y sanitización reutilizados por crear y editar                          |
+| Esquema y datos iniciales | `sql/barismo.sql`                         | `CREATE DATABASE` + `CREATE TABLE productos` + los 8 productos del catálogo                  |
+
+### Seguridad aplicada
+
+- **Consultas preparadas obligatorias:** todas las operaciones (SELECT, INSERT, UPDATE, DELETE)
+  usan `$pdo->prepare()` con marcadores `:parametro`; ningún dato del usuario se concatena en el SQL.
+- **Sanitización XSS:** toda variable impresa en las vistas sale por `htmlspecialchars()` (`e()`).
+- **Validación en el servidor:** `filter_input`/`filter_var` para enteros, listas blancas para
+  categoría y estrellas, largos máximos y formato de nombre de archivo para la imagen.
+- **Persistencia de campos:** ante errores de validación el formulario conserva lo cargado.
+
+### Instalación de la base de datos (XAMPP / Laragon)
+
+1. Importar `clase7/sql/barismo.sql` desde phpMyAdmin, o por consola:
+   `mysql -u root < sql/barismo.sql`
+2. Configurar `.env` (los valores por defecto ya son los de XAMPP):
+
+   ```
+   DB_HOST=localhost
+   DB_NAME=barismo
+   DB_USER=root
+   DB_PASS=
+   ```
+
+3. Abrir `admin/index.php` dentro del sitio (o el enlace **Administrar** del footer).
+
+### Capturas
+
+| Listado con aviso de alta                                        | Formulario de nuevo producto                                  |
+| ---------------------------------------------------------------- | ------------------------------------------------------------- |
+| ![Listado](clase7/docs/capturas/admin-listado.png)               | ![Crear](clase7/docs/capturas/admin-crear.png)                |
+| **Edición con datos cargados**                                   | **Errores de validación en el servidor**                      |
+| ![Editar](clase7/docs/capturas/admin-editar.png)                 | ![Errores](clase7/docs/capturas/admin-errores.png)            |
+
 ---
 
 # Documentación de diseño (TP anteriores)

@@ -8,19 +8,20 @@
           <div class="col-6 col-lg-2">
             <h3>Explorar</h3>
             <ul class="list-unstyled">
-              <li><a href="menu.php">Menú</a></li>
-              <li><a href="galeria.php">Galería</a></li>
-              <li><a href="talleres.php">Talleres</a></li>
-              <li><a href="blog.php">Blog</a></li>
+              <li><a href="<?= $base ?>menu.php">Menú</a></li>
+              <li><a href="<?= $base ?>galeria.php">Galería</a></li>
+              <li><a href="<?= $base ?>talleres.php">Talleres</a></li>
+              <li><a href="<?= $base ?>blog.php">Blog</a></li>
             </ul>
           </div>
           <div class="col-6 col-lg-2">
             <h3>Comprar</h3>
             <ul class="list-unstyled">
-              <li><a href="tienda.php">Tienda</a></li>
-              <li><a href="tecnicas.php">Técnicas</a></li>
-              <li><a href="ubicacion.php">Ubicación</a></li>
-              <li><a href="contacto.php">Contacto</a></li>
+              <li><a href="<?= $base ?>tienda.php">Tienda</a></li>
+              <li><a href="<?= $base ?>tecnicas.php">Técnicas</a></li>
+              <li><a href="<?= $base ?>ubicacion.php">Ubicación</a></li>
+              <li><a href="<?= $base ?>contacto.php">Contacto</a></li>
+              <li><a href="<?= $base ?>admin/index.php">Administrar</a></li>
             </ul>
           </div>
           <div class="col-lg-4">
@@ -46,6 +47,6 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="js/main.js"></script>
+    <script src="<?= $base ?>js/main.js"></script>
   </body>
 </html>

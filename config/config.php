@@ -32,6 +32,11 @@ define('APP_PHONE', $env['APP_PHONE'] ?? '');
 define('APP_ADDRESS', $env['APP_ADDRESS'] ?? '');
 define('APP_ENV', $env['APP_ENV'] ?? 'production');
 
+define('DB_HOST', $env['DB_HOST'] ?? 'localhost');
+define('DB_NAME', $env['DB_NAME'] ?? 'barismo');
+define('DB_USER', $env['DB_USER'] ?? 'root');
+define('DB_PASS', $env['DB_PASS'] ?? '');
+
 if (APP_ENV === 'local') {
     ini_set('display_errors', '1');
     error_reporting(E_ALL);

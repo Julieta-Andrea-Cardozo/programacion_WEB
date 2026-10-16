@@ -12,12 +12,12 @@ $paginas = [
     'contacto' => 'Contacto',
 ];
 
-$pagina_actual = basename($_SERVER['SCRIPT_NAME'], '.php');
+$pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
 ?>
     <header>
       <nav class="navbar navbar-expand-xl navbar-barismo sticky-top" aria-label="Navegación principal">
         <div class="container">
-          <a class="navbar-brand" href="index.php"><?= e(APP_NAME) ?></a>
+          <a class="navbar-brand" href="<?= $base ?>index.php"><?= e(APP_NAME) ?></a>
           <button
             class="navbar-toggler"
             type="button"
@@ -37,14 +37,14 @@ $pagina_actual = basename($_SERVER['SCRIPT_NAME'], '.php');
                 <a
                   class="nav-link<?= $activa ? ' active' : '' ?>"
                   <?= $activa ? 'aria-current="page"' : '' ?>
-                  href="<?= $archivo ?>.php"
+                  href="<?= $base . $archivo ?>.php"
                 ><?= e($etiqueta) ?></a>
               </li>
 <?php endforeach; ?>
             </ul>
             <a
               class="btn btn-borde text-nowrap ms-xl-3 mt-2 mt-xl-0"
-              href="tienda.php"
+              href="<?= $base ?>tienda.php"
               aria-label="Ver carrito de compras"
             >
               Carrito

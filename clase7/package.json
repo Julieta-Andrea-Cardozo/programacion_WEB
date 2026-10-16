@@ -1,0 +1,13 @@
+{
+  "name": "barismo-cafe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Maqueta web de Barismo & Café — TP Programación Web",
+  "scripts": {
+    "format": "prettier --write \"**/*.{html,css,js,md,php}\"",
+    "format:check": "prettier --check \"**/*.{html,css,js}\""
+  },
+  "devDependencies": {
+    "prettier": "3.3.3"
+  }
+}
