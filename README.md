@@ -287,22 +287,22 @@ enlace **Administrar** del footer.
 
 ## Diseño del esquema relacional en MySQL (TP N° 6)
 
-La carpeta [`clase6/`](clase6/) contiene el modelo de datos completo de Barismo & Café, en una base
+La carpeta [`tp6/`](tp6/) contiene el modelo de datos completo de Barismo & Café, en una base
 separada (`barismo_tp6`) para no pisar la base `barismo` que usa el CRUD del TP7.
 
 | Archivo                                         | Contenido                                                                                       |
 | ----------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [`NORMALIZACION.md`](clase6/NORMALIZACION.md)   | Tabla sin normalizar, paso a 1FN, 2FN y 3FN, tablas finales con sus PK/FK y decisiones de diseño |
-| [`schema.sql`](clase6/schema.sql)               | `CREATE DATABASE` + 10 tablas, claves foráneas, `CHECK`, índices y auditoría `created_at/updated_at` |
-| [`consultas.sql`](clase6/consultas.sql)         | Datos iniciales, `SELECT` con filtros, `INNER JOIN`, `UPDATE` y `DELETE` con `WHERE`            |
+| [`NORMALIZACION.md`](tp6/NORMALIZACION.md)   | Tabla sin normalizar, paso a 1FN, 2FN y 3FN, tablas finales con sus PK/FK y decisiones de diseño |
+| [`schema.sql`](tp6/schema.sql)               | `CREATE DATABASE` + 10 tablas, claves foráneas, `CHECK`, índices y auditoría `created_at/updated_at` |
+| [`consultas.sql`](tp6/consultas.sql)         | Datos iniciales, `SELECT` con filtros, `INNER JOIN`, `UPDATE` y `DELETE` con `WHERE`            |
 
 Tablas: `roles`, `usuarios`, `categorias`, `productos`, `estados_pedido`, `pedidos`,
 `detalle_pedidos` (N:M pedidos ↔ productos), `niveles`, `talleres` e `inscripciones`
 (N:M usuarios ↔ talleres).
 
 ```bash
-mysql -u root < clase6/schema.sql
-mysql -u root < clase6/consultas.sql
+mysql -u root < tp6/schema.sql
+mysql -u root < tp6/consultas.sql
 ```
 
 En phpMyAdmin (XAMPP / Laragon): pestaña **Importar** → `schema.sql` y después `consultas.sql`.
