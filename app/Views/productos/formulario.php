@@ -1,11 +1,12 @@
 <?php
 /**
- * Formulario compartido por crear.php y editar.php.
- * Usa $datos, $errores y $accion definidos por la vista que lo incluye.
+ * Formulario compartido por las vistas crear y editar.
+ * Usa $datos, $errores y $accion que envía ProductoController.
  */
 $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-invalid' : '';
 ?>
           <form class="taller form-barismo p-4" method="post" action="<?= e($accion) ?>" novalidate>
+            <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
             <div class="row g-3">
               <div class="col-md-8">
                 <label class="form-label" for="nombre">Nombre</label>

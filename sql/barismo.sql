@@ -1,4 +1,4 @@
--- Base de datos del sitio Barismo & Café (Clase 7 - TP7)
+-- Base de datos del sitio Barismo & Café (Clase 7 - TP7 + usuarios del TP8)
 -- Importar en phpMyAdmin o con: mysql -u root < sql/barismo.sql
 
 CREATE DATABASE IF NOT EXISTS barismo
@@ -28,3 +28,20 @@ INSERT INTO productos (nombre, categoria, meta, notas, precio, estrellas, imagen
 ('Kit Barista Inicial', 'insumo', 'Accesorios', 'Tamper, jarra y tabla de golpes', 12500, 4, 'insumo-kit.jpg'),
 ('Tamper 58 mm Acero', 'insumo', 'Espresso', 'Base plana y mango ergonómico', 8900, 5, 'insumo-portafiltro.jpg'),
 ('Box Mensual Barismo', 'insumo', 'Suscripción', 'Dos orígenes sorpresa por mes', 7500, 5, 'insumo-bolsa.jpg');
+
+-- Usuarios para el login (TP8)
+
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(60) NOT NULL,
+  email VARCHAR(120) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  rol VARCHAR(20) NOT NULL DEFAULT 'usuario',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_usuarios_rol CHECK (rol IN ('admin', 'usuario'))
+) ENGINE=InnoDB;
+
+-- Administrador inicial · email: admin@barismo.com.ar · contraseña: Barismo2026
+-- (la contraseña se guarda hasheada con password_hash / bcrypt)
+INSERT IGNORE INTO usuarios (nombre, email, password, rol) VALUES
+('Julieta', 'admin@barismo.com.ar', '$2y$10$hiMgmBd.DwxCy.aVBa3ZQuqjsomi2TR5p3KGSsG7rtzuYTK83x9ki', 'admin');

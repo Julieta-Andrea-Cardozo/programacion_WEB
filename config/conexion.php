@@ -15,5 +15,10 @@ $opciones = [
 try {
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $opciones);
 } catch (PDOException $e) {
+    if (defined('RESPUESTA_JSON')) {
+        http_response_code(500);
+        echo json_encode(['status' => 'error', 'message' => 'No se pudo conectar a la base de datos.']);
+        exit;
+    }
     die('Error crítico de conexión: ' . e($e->getMessage()));
 }

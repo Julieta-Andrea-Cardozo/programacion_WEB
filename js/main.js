@@ -25,16 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   actualizarContador(leerCarrito());
 
-  document.querySelectorAll("[data-agregar]").forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const carrito = [...leerCarrito(), boton.dataset.agregar];
-      localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
-      actualizarContador(carrito);
-      boton.textContent = "Agregado ✓";
-      setTimeout(() => {
-        boton.textContent = "Agregar";
-      }, 1500);
-    });
+  // Delegación de eventos: también funciona con las tarjetas que agrega app.js.
+  document.addEventListener("click", (evento) => {
+    const boton = evento.target.closest("[data-agregar]");
+    if (!boton) {
+      return;
+    }
+    const carrito = [...leerCarrito(), boton.dataset.agregar];
+    localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
+    actualizarContador(carrito);
+    boton.textContent = "Agregado ✓";
+    setTimeout(() => {
+      boton.textContent = "Agregar";
+    }, 1500);
   });
 
   const formulario = document.getElementById("form-contacto");

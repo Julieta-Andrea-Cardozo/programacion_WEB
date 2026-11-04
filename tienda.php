@@ -51,6 +51,7 @@ if ($busco && $error_busqueda === '') {
           <form
             class="taller form-barismo p-4 mb-4"
             id="form-busqueda"
+            data-api="api/buscar_productos.php"
             method="get"
             action="tienda.php"
             role="search"
@@ -66,6 +67,9 @@ if ($busco && $error_busqueda === '') {
                   value="<?= e($busqueda) ?>"
                   placeholder="Ej: colombia, molino, chocolate..."
                   maxlength="60"
+                  autocomplete="off"
+                  aria-describedby="estado-busqueda"
+                  aria-controls="resultados"
                   required
                 />
                 <div class="invalid-feedback">
@@ -84,7 +88,11 @@ if ($busco && $error_busqueda === '') {
                 <button class="btn btn-cafe w-100" type="submit">Buscar</button>
               </div>
             </div>
+            <p class="meta mt-3 mb-0" id="estado-busqueda" aria-live="polite" data-estado-busqueda>
+              Los resultados se actualizan mientras escribís, sin recargar la página.
+            </p>
           </form>
+          <div class="row g-4 mb-2" id="resultados" aria-live="polite" hidden></div>
 <?php if ($error_busqueda) : ?>
           <div class="alert alert-danger" role="alert"><?= e($error_busqueda) ?></div>
 <?php elseif ($aviso) : ?>
@@ -95,7 +103,7 @@ if ($busco && $error_busqueda === '') {
             <?= e($aviso) ?>
           </div>
 <?php endif; ?>
-          <div class="row g-4">
+          <div class="row g-4" data-catalogo>
 <?php $nivel_titulo = 'h2'; ?>
 <?php foreach ($granos as $producto) : ?>
 <?php require __DIR__ . '/includes/producto.php'; ?>
@@ -104,7 +112,7 @@ if ($busco && $error_busqueda === '') {
         </div>
       </section>
 <?php if (!$busco || $tipo !== 'granos') : ?>
-      <section class="seccion seccion-crema" aria-labelledby="titulo-insumos">
+      <section class="seccion seccion-crema" aria-labelledby="titulo-insumos" data-catalogo>
         <div class="container">
           <p class="eyebrow">Tienda</p>
           <h2 class="titulo-seccion" id="titulo-insumos">Insumos para Cafetera</h2>

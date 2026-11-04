@@ -49,6 +49,21 @@ function e(string $texto): string
     return htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
 }
 
+/**
+ * Prefijo relativo ('', '../', ...) para que las vistas dentro de subcarpetas
+ * (admin/) encuentren los recursos y las páginas de la raíz.
+ */
+function base_relativa(): string
+{
+    $dir_raiz = str_replace('\\', '/', dirname(__DIR__));
+    $dir_actual = str_replace('\\', '/', dirname($_SERVER['SCRIPT_FILENAME']));
+    if ($dir_actual === $dir_raiz) {
+        return '';
+    }
+
+    return str_repeat('../', substr_count(trim(substr($dir_actual, strlen($dir_raiz)), '/'), '/') + 1);
+}
+
 function largo(string $texto): int
 {
     return function_exists('mb_strlen')
