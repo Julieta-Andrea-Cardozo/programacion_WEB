@@ -285,6 +285,127 @@ enlace **Administrar** del footer.
 | **Edición con datos cargados**                                   | **Errores de validación en el servidor**                      |
 | ![Editar](clase7/docs/capturas/admin-editar.png)                 | ![Errores](clase7/docs/capturas/admin-errores.png)            |
 
+## Diseño del esquema relacional en MySQL (TP N° 6)
+
+La carpeta [`clase6/`](clase6/) contiene el modelo de datos completo de Barismo & Café, en una base
+separada (`barismo_tp6`) para no pisar la base `barismo` que usa el CRUD del TP7.
+
+| Archivo                                         | Contenido                                                                                       |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [`NORMALIZACION.md`](clase6/NORMALIZACION.md)   | Tabla sin normalizar, paso a 1FN, 2FN y 3FN, tablas finales con sus PK/FK y decisiones de diseño |
+| [`schema.sql`](clase6/schema.sql)               | `CREATE DATABASE` + 10 tablas, claves foráneas, `CHECK`, índices y auditoría `created_at/updated_at` |
+| [`consultas.sql`](clase6/consultas.sql)         | Datos iniciales, `SELECT` con filtros, `INNER JOIN`, `UPDATE` y `DELETE` con `WHERE`            |
+
+Tablas: `roles`, `usuarios`, `categorias`, `productos`, `estados_pedido`, `pedidos`,
+`detalle_pedidos` (N:M pedidos ↔ productos), `niveles`, `talleres` e `inscripciones`
+(N:M usuarios ↔ talleres).
+
+```bash
+mysql -u root < clase6/schema.sql
+mysql -u root < clase6/consultas.sql
+```
+
+En phpMyAdmin (XAMPP / Laragon): pestaña **Importar** → `schema.sql` y después `consultas.sql`.
+
+## Sesiones y autenticación (TP N° 8)
+
+Desarrollo en [`clase8/`](clase8/): el sitio del TP7 más registro, login, logout y control de acceso
+por roles.
+
+| Componente           | Archivo                     | Qué hace                                                                                   |
+| -------------------- | --------------------------- | ------------------------------------------------------------------------------------------ |
+| Tabla de usuarios    | `sql/usuarios.sql`          | `usuarios` con email `UNIQUE`, `password VARCHAR(255)`, rol `admin`/`usuario` y admin inicial |
+| Sesión segura        | `config/sesion.php`         | Cookie `HttpOnly` + `SameSite=Lax`, `use_strict_mode`, helpers de rol y token CSRF          |
+| Registro             | `registro.php`              | Valida y sanitiza, rechaza emails duplicados y guarda `password_hash()` (bcrypt)            |
+| Login                | `login.php`                 | `password_verify()`, `session_regenerate_id(true)` y datos mínimos en `$_SESSION`           |
+| Guardián de rutas    | `includes/auth_guard.php`   | Sin sesión → `login.php`; rol insuficiente (`$rol_requerido`) → `cuenta.php`                |
+| Vistas protegidas    | `cuenta.php`, `admin_panel.php`, `admin/*` | Área del usuario; panel y CRUD solo para `admin`                         |
+| Logout               | `logout.php`                | Vacía `$_SESSION`, borra la cookie de sesión y llama a `session_destroy()`                  |
+
+**Instalación:** importar `clase7/sql/barismo.sql` y luego `clase8/sql/usuarios.sql`.
+Usuario administrador de prueba: `admin@barismo.com.ar` / `Barismo2026` (las cuentas nuevas se crean
+desde `registro.php` con rol `usuario`).
+
+| Registro                                           | Error de login genérico                               |
+| -------------------------------------------------- | ----------------------------------------------------- |
+| ![Registro](clase8/docs/capturas/registro.png)     | ![Login](clase8/docs/capturas/login-error.png)        |
+| **Área del usuario (`cuenta.php`)**                | **Usuario sin rol admin intentando entrar al panel**  |
+| ![Cuenta](clase8/docs/capturas/cuenta-usuario.png) | ![Sin permiso](clase8/docs/capturas/usuario-sin-permiso.png) |
+| **Panel de administración**                        | **Ruta protegida sin sesión**                         |
+| ![Panel](clase8/docs/capturas/admin-panel.png)     | ![Acceso denegado](clase8/docs/capturas/acceso-denegado.png) |
+
+## Comunicación asincrónica con Fetch API y JSON (TP N° 9)
+
+Desarrollo en [`clase9/`](clase9/) (parte de la versión del TP8).
+
+- **Endpoint** [`api/buscar_productos.php`](clase9/api/buscar_productos.php): responde solo JSON
+  (`Content-Type: application/json; charset=utf-8`) con consultas preparadas PDO sobre `productos`.
+  - `?q=texto` busca por nombre, notas u origen; `&categoria=grano|insumo` filtra; `?id=3` devuelve uno.
+  - Códigos HTTP: `200` OK, `400` parámetros inválidos, `404` producto inexistente, `405` método no
+    permitido, `500` error de base de datos.
+  - Formato: `{"status":"success","total":2,"data":[...]}` o `{"status":"error","message":"..."}`.
+- **Cliente** [`js/app.js`](clase9/js/app.js): en la tienda, el evento `input` del buscador (con
+  espera de 300 ms) y el `submit` prevenido llaman a `fetch()` con `async/await`, controlan
+  `response.ok`, parsean con `response.json()` y reemplazan solo el contenedor `#resultados`, sin
+  recargar la página. Muestra mensajes de "buscando", sin resultados y errores de red/HTTP en una
+  región `aria-live`. Las tarjetas se arman con `createElement` + `textContent` (sin `innerHTML`),
+  así que los datos de la base no pueden inyectar HTML. Sin JavaScript, el formulario sigue
+  funcionando por GET como en la Clase 5.
+
+```bash
+curl "http://localhost/programacion_WEB/clase9/api/buscar_productos.php?q=colombia"
+```
+
+| Búsqueda en vivo (sin recargar)                           | Respuesta JSON del endpoint                          |
+| --------------------------------------------------------- | ---------------------------------------------------- |
+| ![Búsqueda](clase9/docs/capturas/busqueda-en-vivo.png)    | ![JSON](clase9/docs/capturas/endpoint-json.png)      |
+
+## Patrón MVC e introducción a frameworks (TP N° 10)
+
+Desarrollo en [`clase10/`](clase10/), en dos partes.
+
+### Parte 1 — Refactorización a MVC nativo
+
+El CRUD de productos (antes `crear.php`, `editar.php`, `eliminar.php` con SQL y HTML mezclados) pasa a
+un único punto de entrada y tres capas:
+
+```
+clase10/
+├── admin/index.php                       # front controller: ?accion=index|crear|editar|eliminar
+└── app/
+    ├── bootstrap.php                     # sesión + autoload de clases App\*
+    ├── Core/Database.php                 # conexión PDO única
+    ├── Core/Controller.php               # render() de vistas y redirigir()
+    ├── Models/Producto.php               # todo el SQL (consultas preparadas) y la validación
+    ├── Controllers/ProductoController.php# recibe la petición, usa el modelo, elige la vista
+    └── Views/
+        ├── layout/header.php, footer.php
+        └── productos/index.php, crear.php, editar.php, formulario.php   # solo HTML + e()
+```
+
+El controlador no escribe SQL ni HTML, el modelo no conoce la vista y las vistas solo imprimen
+variables escapadas. Se mantienen el guardián de rol `admin` y el token CSRF del TP8.
+
+### Parte 2 — Módulo en Laravel 12
+
+[`clase10/laravel/`](clase10/laravel/) es un proyecto Laravel que lee la misma tabla `productos`:
+
+| Capa        | Archivo                                               | Qué hace                                                        |
+| ----------- | ----------------------------------------------------- | --------------------------------------------------------------- |
+| Rutas       | `routes/web.php`                                      | `GET /productos` y `GET /productos/{producto}` (con nombre)     |
+| Controlador | `app/Http/Controllers/ProductoController.php`         | Valida `q` y `categoria`, consulta con Eloquent, devuelve vistas |
+| Modelo      | `app/Models/Producto.php`                             | Eloquent sobre `productos`, scopes `buscar()` y `deCategoria()` |
+| Vistas      | `resources/views/layouts/app.blade.php`, `productos/*.blade.php` | Blade con la estética del sitio (escapado automático `{{ }}`) |
+| Tests       | `tests/Feature/ProductoTest.php`                      | Listado, filtros, validación, detalle y 404                     |
+
+Requiere PHP 8.2+ y Composer. Instrucciones en [`clase10/laravel/README.md`](clase10/laravel/README.md).
+
+| MVC nativo: listado del CRUD                          | Laravel: búsqueda con Eloquent                            |
+| ----------------------------------------------------- | --------------------------------------------------------- |
+| ![MVC](clase10/docs/capturas/mvc-listado.png)         | ![Laravel](clase10/docs/capturas/laravel-busqueda.png)    |
+| **MVC nativo: edición**                               | **Laravel: detalle de producto**                          |
+| ![Editar](clase10/docs/capturas/mvc-editar.png)       | ![Detalle](clase10/docs/capturas/laravel-detalle.png)     |
+
 ---
 
 # Documentación de diseño (TP anteriores)
