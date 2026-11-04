@@ -362,7 +362,7 @@ curl "http://localhost/programacion_WEB/clase9/api/buscar_productos.php?q=colomb
 
 ## Patrón MVC e introducción a frameworks (TP N° 10)
 
-Desarrollo en [`clase10/`](clase10/), en dos partes.
+Desarrollo en [`clase10/`](clase10/), en dos partes (detalle en [`clase10/README.md`](clase10/README.md)).
 
 ### Parte 1 — Refactorización a MVC nativo
 
