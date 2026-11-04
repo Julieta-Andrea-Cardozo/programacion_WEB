@@ -21,7 +21,7 @@
               <li><a href="<?= $base ?>tecnicas.php">Técnicas</a></li>
               <li><a href="<?= $base ?>ubicacion.php">Ubicación</a></li>
               <li><a href="<?= $base ?>contacto.php">Contacto</a></li>
-              <li><a href="<?= $base ?>admin/index.php">Administrar</a></li>
+              <li><a href="<?= $base ?>admin_panel.php">Administrar</a></li>
             </ul>
           </div>
           <div class="col-lg-4">
@@ -48,5 +48,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="<?= $base ?>js/main.js"></script>
+    <script src="<?= $base ?>js/app.js"></script>
   </body>
 </html>
