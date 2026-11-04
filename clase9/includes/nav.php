@@ -15,7 +15,7 @@ $paginas = [
 $pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
 ?>
     <header>
-      <nav class="navbar navbar-expand-xl navbar-barismo sticky-top" aria-label="Navegación principal">
+      <nav class="navbar navbar-expand-xxl navbar-barismo sticky-top" aria-label="Navegación principal">
         <div class="container">
           <a class="navbar-brand" href="<?= $base ?>index.php"><?= e(APP_NAME) ?></a>
           <button
@@ -30,7 +30,7 @@ $pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="menuPrincipal">
-            <ul class="navbar-nav ms-auto gap-xl-2">
+            <ul class="navbar-nav ms-auto gap-xxl-2">
 <?php foreach ($paginas as $archivo => $etiqueta) : ?>
 <?php $activa = $archivo === $pagina_actual; ?>
               <li class="nav-item">
@@ -43,7 +43,7 @@ $pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
 <?php endforeach; ?>
             </ul>
             <a
-              class="btn btn-borde text-nowrap ms-xl-3 mt-2 mt-xl-0"
+              class="btn btn-borde text-nowrap ms-xxl-3 mt-2 mt-xxl-0"
               href="<?= $base ?>tienda.php"
               aria-label="Ver carrito de compras"
             >
@@ -51,18 +51,25 @@ $pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
               <span class="badge carrito-contador" data-carrito-contador>0</span>
             </a>
 <?php if (usuario_logueado()) : ?>
-            <div class="d-flex flex-wrap align-items-center gap-2 ms-xl-2 mt-2 mt-xl-0">
-              <a
-                class="btn btn-borde text-nowrap<?= $pagina_actual === 'cuenta' ? ' active' : '' ?>"
-                href="<?= $base ?>cuenta.php"
-              >Hola, <?= e($_SESSION['usuario_nombre']) ?></a>
+            <div class="dropdown ms-xxl-2 mt-2 mt-xxl-0">
+              <button
+                class="btn btn-borde dropdown-toggle text-nowrap<?= in_array($pagina_actual, ['cuenta', 'admin'], true) ? ' active' : '' ?>"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >Hola, <?= e(strtok($_SESSION['usuario_nombre'], ' ')) ?></button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="<?= $base ?>cuenta.php">Mi cuenta</a></li>
 <?php if (es_admin()) : ?>
-              <a class="btn btn-borde text-nowrap" href="<?= $base ?>admin_panel.php">Panel</a>
+                <li><a class="dropdown-item" href="<?= $base ?>admin_panel.php">Panel de administración</a></li>
+                <li><a class="dropdown-item" href="<?= $base ?>admin/index.php">Productos</a></li>
 <?php endif; ?>
-              <a class="btn btn-cafe text-nowrap" href="<?= $base ?>logout.php">Salir</a>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="<?= $base ?>logout.php">Cerrar sesión</a></li>
+              </ul>
             </div>
 <?php else : ?>
-            <a class="btn btn-cafe text-nowrap ms-xl-2 mt-2 mt-xl-0" href="<?= $base ?>login.php">Ingresar</a>
+            <a class="btn btn-cafe text-nowrap ms-xxl-2 mt-2 mt-xxl-0" href="<?= $base ?>login.php">Ingresar</a>
 <?php endif; ?>
           </div>
         </div>
