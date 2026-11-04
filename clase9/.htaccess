@@ -1,0 +1,10 @@
+Options -Indexes
+DirectoryIndex index.php
+
+# Bloquear archivos ocultos (.env, .git, etc.) y de configuración
+<FilesMatch "^\.|\.(md|json|lock)$">
+    Require all denied
+</FilesMatch>
+
+# Bloquear acceso directo a includes, configuración y datos
+RedirectMatch 403 ^/(.*/)?(includes|config|data|node_modules)(/|$)
