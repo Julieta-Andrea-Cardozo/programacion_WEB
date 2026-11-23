@@ -53,6 +53,7 @@
       aria-modal="true"
       aria-labelledby="titulo-carrito"
       aria-hidden="true"
+      inert
       data-carrito
     >
       <div class="flex items-center justify-between border-b border-borde px-6 py-5">

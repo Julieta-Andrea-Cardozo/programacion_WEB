@@ -106,7 +106,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  let disparador = null;
+  const fueraDelCarrito = () =>
+    [...document.body.children].filter((el) => el !== panel && !el.matches("[data-carrito-fondo], [data-toast], script"));
+
   const abrirCarrito = () => {
+    disparador = document.activeElement;
+    panel.inert = false;
+    fueraDelCarrito().forEach((el) => (el.inert = true));
     panel.classList.remove("translate-x-full");
     panel.setAttribute("aria-hidden", "false");
     fondo.classList.remove("hidden");
@@ -120,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     fondo.classList.add("hidden");
     document.body.classList.remove("overflow-hidden");
     confirmacion.classList.add("hidden");
+    fueraDelCarrito().forEach((el) => (el.inert = false));
+    panel.inert = true;
+    disparador?.focus();
   };
 
   let temporizadorToast;
