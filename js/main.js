@@ -214,14 +214,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll("[data-tabs]").forEach((grupo) => {
     const botones = grupo.querySelectorAll('[role="tab"]');
-    botones.forEach((boton) => {
-      boton.addEventListener("click", () => {
-        botones.forEach((otro) => {
-          const activo = otro === boton;
-          otro.setAttribute("aria-selected", String(activo));
-          otro.tabIndex = activo ? 0 : -1;
-          document.getElementById(otro.getAttribute("aria-controls")).hidden = !activo;
-        });
+    const activar = (boton) => {
+      botones.forEach((otro) => {
+        const activo = otro === boton;
+        otro.setAttribute("aria-selected", String(activo));
+        otro.tabIndex = activo ? 0 : -1;
+        document.getElementById(otro.getAttribute("aria-controls")).hidden = !activo;
+      });
+    };
+    botones.forEach((boton, indice) => {
+      boton.addEventListener("click", () => activar(boton));
+      boton.addEventListener("keydown", (evento) => {
+        const pasos = { ArrowRight: 1, ArrowLeft: -1, Home: -indice, End: botones.length - 1 - indice };
+        if (!(evento.key in pasos)) return;
+        evento.preventDefault();
+        const destino = botones[(indice + pasos[evento.key] + botones.length) % botones.length];
+        activar(destino);
+        destino.focus();
       });
     });
   });
