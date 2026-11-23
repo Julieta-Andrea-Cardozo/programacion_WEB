@@ -43,55 +43,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-invalid' : '';
 ?>
     <main id="contenido">
-      <section class="seccion seccion-papel" aria-labelledby="titulo-contacto">
-        <div class="container">
+      <section class="seccion bg-crema" aria-labelledby="titulo-contacto">
+        <div class="contenedor">
           <p class="eyebrow">Contacto</p>
           <h1 class="titulo-seccion" id="titulo-contacto">Escribinos</h1>
           <p class="subtitulo">Respondemos en menos de 24 horas</p>
           <div class="divisor" aria-hidden="true"></div>
-          <div class="row g-4">
-            <div class="col-lg-4">
-              <div class="taller mb-3">
-                <h2 class="eyebrow">Soporte general</h2>
-                <a class="meta fs-6" href="mailto:<?= e(APP_EMAIL) ?>"><?= e(APP_EMAIL) ?></a>
+          <div class="grid gap-6 lg:grid-cols-12">
+            <div class="space-y-3 lg:col-span-4">
+<?php
+$canales = [
+    'Soporte general' => APP_EMAIL,
+    'Talleres y reservas' => 'talleres@barismo.com.ar',
+    'Tienda y pedidos' => 'tienda@barismo.com.ar',
+    'Prensa' => 'prensa@barismo.com.ar',
+];
+?>
+<?php foreach ($canales as $canal => $correo) : ?>
+              <div class="rounded-3xl border border-borde bg-white p-5">
+                <h2 class="eyebrow mb-1"><?= e($canal) ?></h2>
+                <a class="font-mono text-sm" href="mailto:<?= e($correo) ?>"><?= e($correo) ?></a>
               </div>
-              <div class="taller mb-3">
-                <h2 class="eyebrow">Talleres y reservas</h2>
-                <a class="meta fs-6" href="mailto:talleres@barismo.com.ar">
-                  talleres@barismo.com.ar
-                </a>
-              </div>
-              <div class="taller mb-3">
-                <h2 class="eyebrow">Tienda y pedidos</h2>
-                <a class="meta fs-6" href="mailto:tienda@barismo.com.ar">tienda@barismo.com.ar</a>
-              </div>
-              <div class="taller mb-3">
-                <h2 class="eyebrow">Prensa</h2>
-                <a class="meta fs-6" href="mailto:prensa@barismo.com.ar">prensa@barismo.com.ar</a>
-              </div>
-              <div class="taller">
-                <h2 class="eyebrow">Seguinos</h2>
-                <p class="meta fs-6 mb-0">
-                  @barismo_arte
-                  <br />
-                  @barismo.cafe
-                </p>
+<?php endforeach; ?>
+              <div class="rounded-3xl bg-espresso p-5 text-crema">
+                <h2 class="eyebrow mb-1">Seguinos</h2>
+                <p class="mb-0 font-mono text-sm">@barismo_arte<br />@barismo.cafe</p>
               </div>
             </div>
-            <div class="col-lg-8">
+            <div class="lg:col-span-8">
               <form
-                class="taller form-barismo p-4"
+                class="rounded-[2rem] border border-borde bg-white p-6 shadow-sm md:p-8"
                 id="form-contacto"
                 method="post"
                 action="contacto.php"
                 novalidate
                 data-servidor
               >
-                <div class="row g-3">
-                  <div class="col-md-6">
-                    <label class="form-label" for="nombre">Nombre</label>
+                <div class="grid gap-5 md:grid-cols-2">
+                  <div>
+                    <label class="campo-label" for="nombre">Nombre</label>
                     <input
-                      class="form-control<?= $clase_campo('nombre') ?>"
+                      class="campo<?= $clase_campo('nombre') ?>"
                       type="text"
                       id="nombre"
                       name="nombre"
@@ -105,10 +97,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                       <?= e($errores['nombre'] ?? 'Ingresá tu nombre (mínimo 3 letras).') ?>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <label class="form-label" for="email">Email</label>
+                  <div>
+                    <label class="campo-label" for="email">Email</label>
                     <input
-                      class="form-control<?= $clase_campo('email') ?>"
+                      class="campo<?= $clase_campo('email') ?>"
                       type="email"
                       id="email"
                       name="email"
@@ -121,24 +113,19 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                       <?= e($errores['email'] ?? 'Ingresá un email válido.') ?>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <label class="form-label" for="asunto">Asunto</label>
-                    <select
-                      class="form-select<?= $clase_campo('asunto') ?>"
-                      id="asunto"
-                      name="asunto"
-                      required
-                    >
+                  <div class="md:col-span-2">
+                    <label class="campo-label" for="asunto">Asunto</label>
+                    <select class="campo<?= $clase_campo('asunto') ?>" id="asunto" name="asunto" required>
 <?php foreach ($asuntos as $valor => $texto) : ?>
                       <option value="<?= e($valor) ?>"<?= $valor === $datos['asunto'] ? ' selected' : '' ?>><?= e($texto) ?></option>
 <?php endforeach; ?>
                     </select>
                     <div class="invalid-feedback"><?= e($errores['asunto'] ?? 'Elegí un asunto.') ?></div>
                   </div>
-                  <div class="col-12">
-                    <label class="form-label" for="mensaje">Mensaje</label>
+                  <div class="md:col-span-2">
+                    <label class="campo-label" for="mensaje">Mensaje</label>
                     <textarea
-                      class="form-control<?= $clase_campo('mensaje') ?>"
+                      class="campo<?= $clase_campo('mensaje') ?>"
                       id="mensaje"
                       name="mensaje"
                       rows="5"
@@ -150,20 +137,16 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                       <?= e($errores['mensaje'] ?? 'Escribí un mensaje de al menos 10 caracteres.') ?>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <button class="btn btn-cafe w-100" type="submit">Enviar mensaje →</button>
+                  <div class="md:col-span-2">
+                    <button class="btn-cafe w-full" type="submit">Enviar mensaje →</button>
                   </div>
                 </div>
-                <div
-                  class="alert alert-success mt-3 mb-0<?= $enviado ? '' : ' d-none' ?>"
-                  role="status"
-                  data-form-ok
-                >
+                <div class="alerta alerta-success mb-0 mt-4<?= $enviado ? '' : ' hidden' ?>" role="status" data-form-ok>
                   ¡Gracias<?= $enviado ? ', ' . e($nombre_enviado) : '' ?>! Recibimos tu mensaje y te
                   responderemos pronto desde <?= e(APP_EMAIL) ?>.
                 </div>
 <?php if ($errores) : ?>
-                <div class="alert alert-danger mt-3 mb-0" role="alert">
+                <div class="alerta alerta-danger mb-0 mt-4" role="alert">
                   Revisá los campos marcados antes de enviar el formulario.
                 </div>
 <?php endif; ?>

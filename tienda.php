@@ -43,24 +43,24 @@ if ($busco && $error_busqueda === '') {
 ?>
     <main id="contenido">
       <section class="seccion" aria-labelledby="titulo-granos">
-        <div class="container">
+        <div class="contenedor">
           <p class="eyebrow">Tienda</p>
           <h1 class="titulo-seccion" id="titulo-granos">Café en Grano</h1>
           <p class="subtitulo">Orígenes seleccionados, tostado artesanal</p>
           <div class="divisor" aria-hidden="true"></div>
           <form
-            class="taller form-barismo p-4 mb-4"
+            class="panel mb-8"
             id="form-busqueda"
             data-api="api/buscar_productos.php"
             method="get"
             action="tienda.php"
             role="search"
           >
-            <div class="row g-3 align-items-end">
-              <div class="col-md-7">
-                <label class="form-label" for="q">Buscar en la tienda</label>
+            <div class="grid items-end gap-4 md:grid-cols-12">
+              <div class="md:col-span-7">
+                <label class="campo-label" for="q">Buscar en la tienda</label>
                 <input
-                  class="form-control<?= $error_busqueda ? ' is-invalid' : '' ?>"
+                  class="campo<?= $error_busqueda ? ' is-invalid' : '' ?>"
                   type="search"
                   id="q"
                   name="q"
@@ -76,34 +76,34 @@ if ($busco && $error_busqueda === '') {
                   <?= e($error_busqueda ?: 'Escribí qué producto querés buscar.') ?>
                 </div>
               </div>
-              <div class="col-md-3">
-                <label class="form-label" for="tipo">Categoría</label>
-                <select class="form-select" id="tipo" name="tipo">
+              <div class="md:col-span-3">
+                <label class="campo-label" for="tipo">Categoría</label>
+                <select class="campo" id="tipo" name="tipo">
 <?php foreach ($tipos as $valor => $texto) : ?>
                   <option value="<?= e($valor) ?>"<?= $valor === $tipo ? ' selected' : '' ?>><?= e($texto) ?></option>
 <?php endforeach; ?>
                 </select>
               </div>
-              <div class="col-md-2">
-                <button class="btn btn-cafe w-100" type="submit">Buscar</button>
+              <div class="md:col-span-2">
+                <button class="btn-cafe w-full" type="submit">Buscar</button>
               </div>
             </div>
-            <p class="meta mt-3 mb-0" id="estado-busqueda" aria-live="polite" data-estado-busqueda>
+            <p class="meta mb-0 mt-3" id="estado-busqueda" aria-live="polite" data-estado-busqueda>
               Los resultados se actualizan mientras escribís, sin recargar la página.
             </p>
           </form>
-          <div class="row g-4 mb-2" id="resultados" aria-live="polite" hidden></div>
+          <div class="mb-2 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" id="resultados" aria-live="polite" hidden></div>
 <?php if ($error_busqueda) : ?>
-          <div class="alert alert-danger" role="alert"><?= e($error_busqueda) ?></div>
+          <div class="alerta alerta-danger" role="alert"><?= e($error_busqueda) ?></div>
 <?php elseif ($aviso) : ?>
           <div
-            class="alert <?= count($granos) + count($insumos) ? 'alert-success' : 'alert-warning' ?>"
+            class="alerta <?= count($granos) + count($insumos) ? 'alerta-success' : 'alerta-warning' ?>"
             role="status"
           >
             <?= e($aviso) ?>
           </div>
 <?php endif; ?>
-          <div class="row g-4" data-catalogo>
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-catalogo>
 <?php $nivel_titulo = 'h2'; ?>
 <?php foreach ($granos as $producto) : ?>
 <?php require __DIR__ . '/includes/producto.php'; ?>
@@ -112,25 +112,21 @@ if ($busco && $error_busqueda === '') {
         </div>
       </section>
 <?php if (!$busco || $tipo !== 'granos') : ?>
-      <section class="seccion seccion-crema" aria-labelledby="titulo-insumos" data-catalogo>
-        <div class="container">
+      <section class="seccion bg-crema" aria-labelledby="titulo-insumos" data-catalogo>
+        <div class="contenedor">
           <p class="eyebrow">Tienda</p>
           <h2 class="titulo-seccion" id="titulo-insumos">Insumos para Cafetera</h2>
           <p class="subtitulo">Todo lo que necesitás para preparar en casa</p>
           <div class="divisor" aria-hidden="true"></div>
-          <div class="row g-4">
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 <?php $nivel_titulo = 'h3'; ?>
 <?php foreach ($insumos as $producto) : ?>
 <?php require __DIR__ . '/includes/producto.php'; ?>
 <?php endforeach; ?>
           </div>
-          <div
-            class="alert alert-light border mt-4 mb-0"
-            role="status"
-            aria-live="polite"
-            data-carrito-mensaje
-          >
-            Tu carrito está vacío.
+          <div class="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-borde bg-white p-5">
+            <p class="mb-0" role="status" aria-live="polite" data-carrito-mensaje>Tu carrito está vacío.</p>
+            <button class="btn-cafe btn-sm" type="button" data-carrito-abrir aria-controls="carrito">Ver carrito</button>
           </div>
         </div>
       </section>

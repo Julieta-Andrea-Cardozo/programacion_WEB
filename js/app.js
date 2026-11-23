@@ -36,45 +36,45 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const crearTarjeta = (producto) => {
-    const columna = crear("div", "col-sm-6 col-lg-3");
-    const tarjeta = crear("article", "card tarjeta");
+    const tarjeta = crear("article", "tarjeta");
 
-    const imagen = crear("img");
+    const imagen = crear("img", "tarjeta-img");
     imagen.src = producto.imagen ? `img/${producto.imagen}` : "img/favicon.svg";
     imagen.alt = producto.nombre;
     imagen.width = 500;
     imagen.height = 500;
     imagen.loading = "lazy";
 
-    const cuerpo = crear("div", "card-body p-3 d-flex flex-column");
+    const cuerpo = crear("div", "flex flex-1 flex-col p-5");
     const puntaje = crear("p", "estrellas mb-1", estrellas(producto.estrellas));
     puntaje.setAttribute("aria-label", `${producto.estrellas} de 5 estrellas`);
 
-    const pie = crear("div", "d-flex justify-content-between align-items-center mt-auto");
-    const boton = crear("button", "btn btn-borde btn-sm", "Agregar");
+    const pie = crear("div", "mt-auto flex items-center justify-between");
+    const boton = crear("button", "btn-cafe btn-sm", "Agregar");
     boton.type = "button";
     boton.dataset.agregar = producto.nombre;
+    boton.dataset.precio = producto.precio;
+    boton.dataset.img = producto.imagen || "";
     boton.setAttribute("aria-label", `Agregar ${producto.nombre} al carrito`);
-    pie.append(crear("span", "precio fs-4", formatoPrecio(producto.precio)), boton);
+    pie.append(crear("span", "precio", formatoPrecio(producto.precio)), boton);
 
     cuerpo.append(
       crear("p", "meta mb-1", producto.meta),
-      crear("h2", "card-title h5 mb-1", producto.nombre),
+      crear("h2", "mb-1 text-xl font-bold", producto.nombre),
       puntaje,
-      crear("p", "small fst-italic", producto.notas),
+      crear("p", "mb-4 text-sm italic text-suave", producto.notas),
       pie,
     );
     tarjeta.append(imagen, cuerpo);
-    columna.append(tarjeta);
-    return columna;
+    return tarjeta;
   };
 
   const renderizarResultados = (productos, termino) => {
     contenedorResultados.replaceChildren();
     if (productos.length === 0) {
-      const vacio = crear("div", "col-12");
+      const vacio = crear("div", "col-span-full");
       vacio.append(
-        crear("p", "alert alert-warning mb-0", `No encontramos productos para «${termino}».`),
+        crear("p", "alerta alerta-warning mb-0", `No encontramos productos para «${termino}».`),
       );
       contenedorResultados.append(vacio);
       return;

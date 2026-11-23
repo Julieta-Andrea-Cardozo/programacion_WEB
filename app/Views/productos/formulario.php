@@ -5,13 +5,13 @@
  */
 $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-invalid' : '';
 ?>
-          <form class="taller form-barismo p-4" method="post" action="<?= e($accion) ?>" novalidate>
+          <form class="rounded-[2rem] border border-borde bg-white p-6 shadow-sm md:p-8" method="post" action="<?= e($accion) ?>" novalidate>
             <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
-            <div class="row g-3">
-              <div class="col-md-8">
-                <label class="form-label" for="nombre">Nombre</label>
+            <div class="grid gap-5 md:grid-cols-12">
+              <div class="md:col-span-8">
+                <label class="campo-label" for="nombre">Nombre</label>
                 <input
-                  class="form-control<?= $clase_campo('nombre') ?>"
+                  class="campo<?= $clase_campo('nombre') ?>"
                   type="text"
                   id="nombre"
                   name="nombre"
@@ -25,10 +25,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                   <?= e($errores['nombre'] ?? 'Ingresá un nombre entre 3 y 120 caracteres.') ?>
                 </div>
               </div>
-              <div class="col-md-4">
-                <label class="form-label" for="categoria">Categoría</label>
+              <div class="md:col-span-4">
+                <label class="campo-label" for="categoria">Categoría</label>
                 <select
-                  class="form-select<?= $clase_campo('categoria') ?>"
+                  class="campo<?= $clase_campo('categoria') ?>"
                   id="categoria"
                   name="categoria"
                   required
@@ -38,10 +38,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                 </select>
                 <div class="invalid-feedback"><?= e($errores['categoria'] ?? 'Elegí una categoría.') ?></div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label" for="meta">Origen / detalle</label>
+              <div class="md:col-span-6">
+                <label class="campo-label" for="meta">Origen / detalle</label>
                 <input
-                  class="form-control<?= $clase_campo('meta') ?>"
+                  class="campo<?= $clase_campo('meta') ?>"
                   type="text"
                   id="meta"
                   name="meta"
@@ -51,10 +51,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                 />
                 <div class="invalid-feedback"><?= e($errores['meta'] ?? 'Máximo 120 caracteres.') ?></div>
               </div>
-              <div class="col-md-6">
-                <label class="form-label" for="notas">Notas de sabor / descripción</label>
+              <div class="md:col-span-6">
+                <label class="campo-label" for="notas">Notas de sabor / descripción</label>
                 <input
-                  class="form-control<?= $clase_campo('notas') ?>"
+                  class="campo<?= $clase_campo('notas') ?>"
                   type="text"
                   id="notas"
                   name="notas"
@@ -64,10 +64,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                 />
                 <div class="invalid-feedback"><?= e($errores['notas'] ?? 'Máximo 160 caracteres.') ?></div>
               </div>
-              <div class="col-md-4">
-                <label class="form-label" for="precio">Precio ($)</label>
+              <div class="md:col-span-4">
+                <label class="campo-label" for="precio">Precio ($)</label>
                 <input
-                  class="form-control<?= $clase_campo('precio') ?>"
+                  class="campo<?= $clase_campo('precio') ?>"
                   type="number"
                   id="precio"
                   name="precio"
@@ -81,10 +81,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                   <?= e($errores['precio'] ?? 'Ingresá un precio válido.') ?>
                 </div>
               </div>
-              <div class="col-md-4">
-                <label class="form-label" for="estrellas">Estrellas</label>
+              <div class="md:col-span-4">
+                <label class="campo-label" for="estrellas">Estrellas</label>
                 <select
-                  class="form-select<?= $clase_campo('estrellas') ?>"
+                  class="campo<?= $clase_campo('estrellas') ?>"
                   id="estrellas"
                   name="estrellas"
                   required
@@ -95,10 +95,10 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                 </select>
                 <div class="invalid-feedback"><?= e($errores['estrellas'] ?? 'Elegí entre 1 y 5.') ?></div>
               </div>
-              <div class="col-md-4">
-                <label class="form-label" for="imagen">Imagen (opcional)</label>
+              <div class="md:col-span-4">
+                <label class="campo-label" for="imagen">Imagen (opcional)</label>
                 <input
-                  class="form-control<?= $clase_campo('imagen') ?>"
+                  class="campo<?= $clase_campo('imagen') ?>"
                   type="text"
                   id="imagen"
                   name="imagen"
@@ -110,13 +110,13 @@ $clase_campo = fn (string $campo): string => isset($errores[$campo]) ? ' is-inva
                   <?= e($errores['imagen'] ?? 'Solo el nombre del archivo.') ?>
                 </div>
               </div>
-              <div class="col-12 d-flex gap-2">
-                <button class="btn btn-cafe" type="submit">Guardar</button>
-                <a class="btn btn-borde" href="index.php">Cancelar</a>
+              <div class="flex gap-2 md:col-span-12">
+                <button class="btn-cafe" type="submit">Guardar</button>
+                <a class="btn-borde" href="index.php">Cancelar</a>
               </div>
             </div>
 <?php if ($errores) : ?>
-            <div class="alert alert-danger mt-3 mb-0" role="alert">
+            <div class="alerta alerta-danger mb-0 mt-4" role="alert">
               Revisá los campos marcados antes de guardar.
             </div>
 <?php endif; ?>

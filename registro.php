@@ -68,80 +68,42 @@ require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
-      <section class="seccion seccion-papel" aria-labelledby="titulo-registro">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-              <p class="eyebrow">Mi cuenta</p>
-              <h1 class="titulo-seccion" id="titulo-registro">Crear cuenta</h1>
-              <p class="subtitulo">Comprá en la tienda y anotate en los talleres</p>
-              <div class="divisor" aria-hidden="true"></div>
+      <section class="seccion bg-crema" aria-labelledby="titulo-registro">
+        <div class="contenedor max-w-2xl">
+          <p class="eyebrow">Mi cuenta</p>
+          <h1 class="titulo-seccion" id="titulo-registro">Crear cuenta</h1>
+          <p class="subtitulo">Comprá en la tienda y anotate en los talleres</p>
+          <div class="divisor" aria-hidden="true"></div>
 <?php if (isset($errores['general'])) : ?>
-              <div class="alert alert-danger" role="alert"><?= e($errores['general']) ?></div>
+          <div class="alerta alerta-danger" role="alert"><?= e($errores['general']) ?></div>
 <?php endif; ?>
-              <form class="taller form-barismo p-4" method="post" action="registro.php" novalidate>
-                <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
-                <div class="mb-3">
-                  <label class="form-label" for="nombre">Nombre</label>
-                  <input
-                    class="form-control<?= $clase_campo('nombre') ?>"
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value="<?= e($datos['nombre']) ?>"
-                    autocomplete="name"
-                    minlength="3"
-                    maxlength="60"
-                    required
-                  />
-                  <div class="invalid-feedback"><?= e($errores['nombre'] ?? '') ?></div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="email">Email</label>
-                  <input
-                    class="form-control<?= $clase_campo('email') ?>"
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<?= e($datos['email']) ?>"
-                    autocomplete="email"
-                    maxlength="120"
-                    required
-                  />
-                  <div class="invalid-feedback"><?= e($errores['email'] ?? '') ?></div>
-                </div>
-                <div class="row g-3 mb-4">
-                  <div class="col-sm-6">
-                    <label class="form-label" for="password">Contraseña</label>
-                    <input
-                      class="form-control<?= $clase_campo('password') ?>"
-                      type="password"
-                      id="password"
-                      name="password"
-                      autocomplete="new-password"
-                      minlength="8"
-                      required
-                    />
-                    <div class="invalid-feedback"><?= e($errores['password'] ?? '') ?></div>
-                  </div>
-                  <div class="col-sm-6">
-                    <label class="form-label" for="confirmar">Repetir contraseña</label>
-                    <input
-                      class="form-control<?= $clase_campo('confirmar') ?>"
-                      type="password"
-                      id="confirmar"
-                      name="confirmar"
-                      autocomplete="new-password"
-                      required
-                    />
-                    <div class="invalid-feedback"><?= e($errores['confirmar'] ?? '') ?></div>
-                  </div>
-                </div>
-                <button class="btn btn-cafe w-100" type="submit">Crear cuenta</button>
-              </form>
-              <p class="mt-3 text-center">¿Ya tenés cuenta? <a href="login.php">Ingresá</a></p>
+          <form class="space-y-5 rounded-[2rem] border border-borde bg-white p-6 shadow-sm md:p-8" method="post" action="registro.php" novalidate>
+            <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
+              <div>
+                <label class="campo-label" for="nombre">Nombre</label>
+                <input class="campo<?= $clase_campo('nombre') ?>" type="text" id="nombre" name="nombre" value="<?= e($datos['nombre']) ?>" autocomplete="name" minlength="3" maxlength="60" required />
+                <div class="invalid-feedback"><?= e($errores['nombre'] ?? '') ?></div>
+              </div>
+              <div>
+                <label class="campo-label" for="email">Email</label>
+                <input class="campo<?= $clase_campo('email') ?>" type="email" id="email" name="email" value="<?= e($datos['email']) ?>" autocomplete="email" maxlength="120" required />
+                <div class="invalid-feedback"><?= e($errores['email'] ?? '') ?></div>
+              </div>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label class="campo-label" for="password">Contraseña</label>
+                <input class="campo<?= $clase_campo('password') ?>" type="password" id="password" name="password" autocomplete="new-password" minlength="8" required />
+                <div class="invalid-feedback"><?= e($errores['password'] ?? '') ?></div>
+              </div>
+              <div>
+                <label class="campo-label" for="confirmar">Repetir contraseña</label>
+                <input class="campo<?= $clase_campo('confirmar') ?>" type="password" id="confirmar" name="confirmar" autocomplete="new-password" required />
+                <div class="invalid-feedback"><?= e($errores['confirmar'] ?? '') ?></div>
+              </div>
             </div>
-          </div>
+            <button class="btn-cafe w-full" type="submit">Crear cuenta</button>
+          </form>
+          <p class="mt-4 text-center">¿Ya tenés cuenta? <a class="font-semibold" href="login.php">Ingresá</a></p>
         </div>
       </section>
     </main>

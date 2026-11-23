@@ -56,50 +56,31 @@ require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
-      <section class="seccion seccion-papel" aria-labelledby="titulo-login">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-5">
-              <p class="eyebrow">Mi cuenta</p>
-              <h1 class="titulo-seccion" id="titulo-login">Ingresar</h1>
-              <p class="subtitulo">Accedé a tu cuenta de Barismo &amp; Café</p>
-              <div class="divisor" aria-hidden="true"></div>
+      <section class="seccion bg-crema" aria-labelledby="titulo-login">
+        <div class="contenedor max-w-lg">
+          <p class="eyebrow">Mi cuenta</p>
+          <h1 class="titulo-seccion" id="titulo-login">Ingresar</h1>
+          <p class="subtitulo">Accedé a tu cuenta de Barismo &amp; Café</p>
+          <div class="divisor" aria-hidden="true"></div>
 <?php if ($aviso) : ?>
-              <div class="alert alert-<?= e($aviso[0]) ?>" role="status"><?= e($aviso[1]) ?></div>
+          <div class="alerta alerta-<?= e($aviso[0]) ?>" role="status"><?= e($aviso[1]) ?></div>
 <?php endif; ?>
 <?php if ($error) : ?>
-              <div class="alert alert-danger" role="alert"><?= e($error) ?></div>
+          <div class="alerta alerta-danger" role="alert"><?= e($error) ?></div>
 <?php endif; ?>
-              <form class="taller form-barismo p-4" method="post" action="login.php" novalidate>
-                <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
-                <div class="mb-3">
-                  <label class="form-label" for="email">Email</label>
-                  <input
-                    class="form-control"
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<?= e($email) ?>"
-                    autocomplete="email"
-                    required
-                  />
-                </div>
-                <div class="mb-4">
-                  <label class="form-label" for="password">Contraseña</label>
-                  <input
-                    class="form-control"
-                    type="password"
-                    id="password"
-                    name="password"
-                    autocomplete="current-password"
-                    required
-                  />
-                </div>
-                <button class="btn btn-cafe w-100" type="submit">Ingresar</button>
-              </form>
-              <p class="mt-3 text-center">¿No tenés cuenta? <a href="registro.php">Registrate</a></p>
+          <form class="space-y-5 rounded-[2rem] border border-borde bg-white p-6 shadow-sm md:p-8" method="post" action="login.php" novalidate>
+            <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
+            <div>
+              <label class="campo-label" for="email">Email</label>
+              <input class="campo" type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" required />
             </div>
-          </div>
+            <div>
+              <label class="campo-label" for="password">Contraseña</label>
+              <input class="campo" type="password" id="password" name="password" autocomplete="current-password" required />
+            </div>
+            <button class="btn-cafe w-full" type="submit">Ingresar</button>
+          </form>
+          <p class="mt-4 text-center">¿No tenés cuenta? <a class="font-semibold" href="registro.php">Registrate</a></p>
         </div>
       </section>
     </main>

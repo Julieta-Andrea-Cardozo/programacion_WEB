@@ -5,9 +5,12 @@
   "description": "Maqueta web de Barismo & Café — TP Programación Web",
   "scripts": {
     "format": "prettier --write \"**/*.{html,css,js,md,php}\"",
-    "format:check": "prettier --check \"**/*.{html,css,js}\""
+    "format:check": "prettier --check \"**/*.{html,css,js}\"",
+    "build:css": "tailwindcss -i css/tailwind.css -o css/styles.css --minify",
+    "watch:css": "tailwindcss -i css/tailwind.css -o css/styles.css --watch"
   },
   "devDependencies": {
-    "prettier": "3.3.3"
+    "prettier": "3.3.3",
+    "tailwindcss": "3.4.17"
   }
 }

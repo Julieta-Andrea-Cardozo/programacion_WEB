@@ -19,8 +19,8 @@ de los wireframes de Figma.
 | Tecnología                      | Uso                                                                    |
 | ------------------------------- | ---------------------------------------------------------------------- |
 | HTML5 semántico                 | Estructura de las 10 vistas                                            |
-| CSS3 (variables, grid, flexbox) | Estilos propios en `css/styles.css`                                    |
-| Bootstrap 5.3.3 (CDN)           | Grilla responsive, navbar colapsable, pestañas, collapse y formularios |
+| Tailwind CSS 3.4                | Estilo de cafetería: fuente en `css/tailwind.css`, compilado en `css/styles.css` |
+| JavaScript (localStorage)       | Carrito con cantidades, total y panel lateral (`js/main.js`)           |
 | JavaScript                      | Carrito con `localStorage` y validación del formulario (`js/main.js`)  |
 | Google Fonts                    | Playfair Display, Inter y DM Mono                                      |
 | Prettier 3                      | Formateo del código                                                    |
@@ -47,7 +47,8 @@ de los wireframes de Figma.
 ```
 programacion_WEB/
 ├── index.html … contacto.html   # 10 vistas
-├── css/styles.css               # estilos personalizados
+├── css/tailwind.css             # fuente Tailwind (componentes propios)
+├── css/styles.css               # CSS compilado (npm run build:css)
 ├── js/main.js                   # interacciones
 ├── img/                         # imágenes y favicon
 ├── docs/                        # auditoría Lighthouse y capturas
