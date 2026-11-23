@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
       boton.addEventListener("click", () => activar(boton));
       boton.addEventListener("keydown", (evento) => {
         const pasos = { ArrowRight: 1, ArrowLeft: -1, Home: -indice, End: botones.length - 1 - indice };
-        if (!(evento.key in pasos)) return;
+        if (!(evento.key in pasos) || evento.ctrlKey || evento.metaKey || evento.altKey || evento.shiftKey) return;
         evento.preventDefault();
         const destino = botones[(indice + pasos[evento.key] + botones.length) % botones.length];
         activar(destino);
