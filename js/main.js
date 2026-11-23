@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (objetivo.closest("[data-carrito-finalizar]") && carrito.length) {
       const importe = formatoPrecio(importeTotal(carrito));
       guardarCarrito([]);
-      confirmacion.textContent = `¡Gracias por tu compra! Registramos tu pedido por ${importe}.`;
+      confirmacion.textContent = `¡Gracias! Pedido de demostración por ${importe}: en esta versión no se procesan pagos.`;
       confirmacion.classList.remove("hidden");
     }
   });
