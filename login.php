@@ -104,7 +104,7 @@ require_once __DIR__ . '/includes/nav.php';
                 <button class="btn-cafe w-full" type="submit">Ingresar</button>
               </form>
               <p class="mt-8 border-t border-borde pt-6 text-center text-sm text-suave">
-                ¿No tenés cuenta? <a class="font-semibold" href="registro.php">Creala gratis</a>
+                ¿No tenés cuenta? <a class="font-semibold" href="registro.php<?= $volver ? '?volver=pagar' : '' ?>">Creala gratis</a>
               </p>
             </div>
           </div>

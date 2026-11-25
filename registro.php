@@ -11,6 +11,7 @@ if (usuario_logueado()) {
 }
 
 $datos = ['nombre' => '', 'email' => ''];
+$volver = (filter_input(INPUT_POST, 'volver') ?? filter_input(INPUT_GET, 'volver')) === 'pagar' ? 'pagar' : '';
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':password' => password_hash($password, PASSWORD_BCRYPT),
                 ':rol' => 'usuario',
             ]);
-            header('Location: login.php?estado=registro_ok');
+            header('Location: login.php?estado=registro_ok' . ($volver ? '&volver=pagar' : ''));
             exit;
         }
     }
@@ -88,6 +89,7 @@ require_once __DIR__ . '/includes/nav.php';
 <?php endif; ?>
               <form class="space-y-5" method="post" action="registro.php" novalidate>
                 <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
+                <input type="hidden" name="volver" value="<?= e($volver) ?>" />
                 <div>
                   <label class="campo-label" for="nombre">Nombre</label>
                   <div class="campo-icono">
@@ -126,7 +128,7 @@ require_once __DIR__ . '/includes/nav.php';
                 <button class="btn-cafe w-full" type="submit">Crear cuenta</button>
               </form>
               <p class="mt-8 border-t border-borde pt-6 text-center text-sm text-suave">
-                ¿Ya tenés cuenta? <a class="font-semibold" href="login.php">Ingresá</a>
+                ¿Ya tenés cuenta? <a class="font-semibold" href="login.php<?= $volver ? '?volver=pagar' : '' ?>">Ingresá</a>
               </p>
             </div>
           </div>
