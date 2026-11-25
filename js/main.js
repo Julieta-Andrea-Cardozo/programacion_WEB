@@ -288,21 +288,21 @@ document.addEventListener("DOMContentLoaded", () => {
   if (pago) {
     const listaPago = pago.querySelector("[data-pagar-lista]");
     actualizarPago = (carrito) => {
-    listaPago.replaceChildren();
-    carrito.forEach((item) => {
-      const fila = crear("li", "flex justify-between gap-3 py-2");
-      fila.append(
-        crear("span", "", `${item.cantidad} × ${item.nombre}`),
-        crear("span", "font-titulo font-bold", formatoPrecio(item.precio * item.cantidad)),
+      listaPago.replaceChildren();
+      carrito.forEach((item) => {
+        const fila = crear("li", "flex justify-between gap-3 py-2");
+        fila.append(
+          crear("span", "", `${item.cantidad} × ${item.nombre}`),
+          crear("span", "font-titulo font-bold", formatoPrecio(item.precio * item.cantidad)),
+        );
+        listaPago.append(fila);
+      });
+      pago.querySelector("[data-pagar-total]").textContent = formatoPrecio(importeTotal(carrito));
+      pago.querySelector("[data-pagar-vacio]").hidden = carrito.length > 0;
+      pago.querySelector("[data-pagar-boton]").disabled = carrito.length === 0;
+      pago.querySelector("[data-pagar-carrito]").value = JSON.stringify(
+        carrito.map(({ nombre, cantidad }) => ({ nombre, cantidad })),
       );
-      listaPago.append(fila);
-    });
-    pago.querySelector("[data-pagar-total]").textContent = formatoPrecio(importeTotal(carrito));
-    pago.querySelector("[data-pagar-vacio]").hidden = carrito.length > 0;
-    pago.querySelector("[data-pagar-boton]").disabled = carrito.length === 0;
-    pago.querySelector("[data-pagar-carrito]").value = JSON.stringify(
-      carrito.map(({ nombre, cantidad }) => ({ nombre, cantidad })),
-    );
     };
 
     const precios = JSON.parse(pago.dataset.precios || "{}");
