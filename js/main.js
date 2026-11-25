@@ -284,9 +284,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (document.querySelector("[data-compra-ok]")) guardarCarrito([]);
 
-  if (document.querySelector("[data-pagar-mp]")) {
-    actualizarPago = () => {
-      window.location.href = `${base}pagar.php`;
+  const formularioMp = document.querySelector("[data-pagar-mp] form[method='post']");
+  if (formularioMp) {
+    actualizarPago = (carrito) => {
+      formularioMp.querySelector("[name='mp_confirmado']")?.remove();
+      formularioMp.querySelector("[name='carrito']").value = JSON.stringify(
+        carrito.map(({ nombre, cantidad }) => ({ nombre, cantidad })),
+      );
+      formularioMp.submit();
     };
   }
 
