@@ -229,23 +229,23 @@ $campos_ocultos = function () use ($datos): void {
                 <div class="mt-6 grid gap-5 sm:grid-cols-6" data-panel-metodo="debito"<?= $datos['metodo'] === 'debito' ? '' : ' hidden' ?>>
                   <div class="sm:col-span-6">
                     <label class="campo-label" for="numero">Número de tarjeta</label>
-                    <input class="campo font-mono<?= $clase_campo('numero') ?>" type="text" id="numero" name="numero" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" maxlength="19" data-tarjeta />
+                    <input class="campo font-mono<?= $clase_campo('numero') ?>" type="text" id="numero" name="numero" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19" data-tarjeta />
                     <div class="invalid-feedback"><?= e($errores['numero'] ?? '') ?></div>
                     <p class="meta mb-0 mt-1">Para probar: 4509 9535 6623 3704</p>
                   </div>
                   <div class="sm:col-span-6">
                     <label class="campo-label" for="titular">Nombre del titular</label>
-                    <input class="campo<?= $clase_campo('titular') ?>" type="text" id="titular" name="titular" value="<?= e($datos['titular']) ?>" autocomplete="cc-name" placeholder="Como figura en la tarjeta" />
+                    <input class="campo<?= $clase_campo('titular') ?>" type="text" id="titular" name="titular" value="<?= e($datos['titular']) ?>" autocomplete="off" placeholder="Como figura en la tarjeta" />
                     <div class="invalid-feedback"><?= e($errores['titular'] ?? '') ?></div>
                   </div>
                   <div class="sm:col-span-2">
                     <label class="campo-label" for="vencimiento">Vencimiento</label>
-                    <input class="campo font-mono<?= $clase_campo('vencimiento') ?>" type="text" id="vencimiento" name="vencimiento" value="<?= e($datos['vencimiento']) ?>" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5" data-vencimiento />
+                    <input class="campo font-mono<?= $clase_campo('vencimiento') ?>" type="text" id="vencimiento" name="vencimiento" value="<?= e($datos['vencimiento']) ?>" inputmode="numeric" autocomplete="off" placeholder="MM/AA" maxlength="5" data-vencimiento />
                     <div class="invalid-feedback"><?= e($errores['vencimiento'] ?? '') ?></div>
                   </div>
                   <div class="sm:col-span-2">
                     <label class="campo-label" for="cvv">Código</label>
-                    <input class="campo font-mono<?= $clase_campo('cvv') ?>" type="password" id="cvv" name="cvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="3" />
+                    <input class="campo font-mono<?= $clase_campo('cvv') ?>" type="password" id="cvv" name="cvv" inputmode="numeric" autocomplete="off" placeholder="123" maxlength="3" />
                     <div class="invalid-feedback"><?= e($errores['cvv'] ?? '') ?></div>
                   </div>
                   <div class="sm:col-span-2">
