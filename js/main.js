@@ -13,9 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  let actualizarPago = () => {};
   const guardarCarrito = (carrito) => {
     localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
     renderizarCarrito(carrito);
+    actualizarPago(carrito);
   };
 
   const cantidadTotal = (carrito) => carrito.reduce((suma, item) => suma + item.cantidad, 0);
@@ -274,8 +276,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const pago = document.querySelector("[data-pagar]");
   if (pago) {
-    const carrito = leerCarrito();
     const listaPago = pago.querySelector("[data-pagar-lista]");
+    actualizarPago = (carrito) => {
+    listaPago.replaceChildren();
     carrito.forEach((item) => {
       const fila = crear("li", "flex justify-between gap-3 py-2");
       fila.append(
@@ -290,6 +293,20 @@ document.addEventListener("DOMContentLoaded", () => {
     pago.querySelector("[data-pagar-carrito]").value = JSON.stringify(
       carrito.map(({ nombre, cantidad }) => ({ nombre, cantidad })),
     );
+    };
+
+    const precios = JSON.parse(pago.dataset.precios || "{}");
+    const carrito = leerCarrito();
+    const desactualizado = carrito.some((item) => item.nombre in precios && item.precio !== precios[item.nombre]);
+    carrito.forEach((item) => {
+      if (item.nombre in precios) item.precio = precios[item.nombre];
+    });
+    if (desactualizado) {
+      guardarCarrito(carrito);
+      mostrarToast("Actualizamos los precios de tu carrito");
+    } else {
+      actualizarPago(carrito);
+    }
 
     const boton = pago.querySelector("[data-pagar-boton]");
     const actualizarMetodo = () => {

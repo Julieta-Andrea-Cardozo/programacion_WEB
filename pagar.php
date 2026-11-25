@@ -192,7 +192,7 @@ $campos_ocultos = function () use ($datos): void {
 <?php elseif ($errores) : ?>
           <div class="alerta alerta-danger" role="alert">Revisá los campos marcados.</div>
 <?php endif; ?>
-          <form class="grid gap-6 lg:grid-cols-12" method="post" action="pagar.php" novalidate data-pagar>
+          <form class="grid gap-6 lg:grid-cols-12" method="post" action="pagar.php" novalidate data-pagar data-precios="<?= e(json_encode(array_map(fn ($p) => $p['precio'], $catalogo), JSON_UNESCAPED_UNICODE)) ?>">
             <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
             <input type="hidden" name="carrito" value="" data-pagar-carrito />
             <div class="space-y-6 lg:col-span-7">
