@@ -30,9 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL) || largo($datos['email']) > 120) {
         $errores['email'] = 'Ingresá un email válido.';
+    } elseif (!preg_match('/^[A-Za-z0-9._%+-]+@gmail\.com$/i', $datos['email'])) {
+        $errores['email'] = 'Usá un email de Gmail (ej: tunombre@gmail.com).';
     }
-    if (largo($password) < 8 || !preg_match('/[A-Za-z]/', $password) || !preg_match('/\d/', $password)) {
-        $errores['password'] = 'Mínimo 8 caracteres, con al menos una letra y un número.';
+    if (largo($password) < 6) {
+        $errores['password'] = 'La contraseña debe tener al menos 6 caracteres.';
     }
     if ($password !== $confirmar) {
         $errores['confirmar'] = 'Las contraseñas no coinciden.';
@@ -57,7 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':password' => password_hash($password, PASSWORD_BCRYPT),
                 ':rol' => 'usuario',
             ]);
-            header('Location: login.php?estado=registro_ok' . ($volver ? '&volver=pagar' : ''));
+
+            session_regenerate_id(true);
+            $_SESSION['usuario_id'] = (int) $pdo->lastInsertId();
+            $_SESSION['usuario_nombre'] = $datos['nombre'];
+            $_SESSION['rol'] = 'usuario';
+            unset($_SESSION['csrf']);
+
+            header('Location: ' . ($volver ? 'pagar.php' : 'cuenta.php'));
             exit;
         }
     }
@@ -87,14 +96,14 @@ require_once __DIR__ . '/includes/nav.php';
 <?php if (isset($errores['general'])) : ?>
               <div class="alerta alerta-danger" role="alert"><?= e($errores['general']) ?></div>
 <?php endif; ?>
-              <form class="space-y-5" method="post" action="registro.php" novalidate>
+              <form class="space-y-5" method="post" action="registro.php" novalidate data-validar>
                 <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
                 <input type="hidden" name="volver" value="<?= e($volver) ?>" />
                 <div>
                   <label class="campo-label" for="nombre">Nombre</label>
                   <div class="campo-icono">
                     <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
-                    <input class="campo<?= $clase_campo('nombre') ?>" type="text" id="nombre" name="nombre" value="<?= e($datos['nombre']) ?>" autocomplete="name" minlength="3" maxlength="60" required />
+                    <input class="campo<?= $clase_campo('nombre') ?>" type="text" id="nombre" name="nombre" value="<?= e($datos['nombre']) ?>" autocomplete="name" minlength="3" maxlength="60" required data-letras />
                   </div>
                   <div class="invalid-feedback block"><?= e($errores['nombre'] ?? '') ?></div>
                 </div>
@@ -102,7 +111,7 @@ require_once __DIR__ . '/includes/nav.php';
                   <label class="campo-label" for="email">Email</label>
                   <div class="campo-icono">
                     <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" /></svg>
-                    <input class="campo<?= $clase_campo('email') ?>" type="email" id="email" name="email" value="<?= e($datos['email']) ?>" autocomplete="email" maxlength="120" placeholder="tu@email.com" required />
+                    <input class="campo<?= $clase_campo('email') ?>" type="email" id="email" name="email" value="<?= e($datos['email']) ?>" autocomplete="email" maxlength="120" placeholder="tunombre@gmail.com" required data-gmail />
                   </div>
                   <div class="invalid-feedback block"><?= e($errores['email'] ?? '') ?></div>
                 </div>
@@ -111,7 +120,7 @@ require_once __DIR__ . '/includes/nav.php';
                   <label class="campo-label" for="password">Contraseña</label>
                   <div class="campo-icono">
                     <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
-                    <input class="campo pr-16<?= $clase_campo('password') ?>" type="password" id="password" name="password" autocomplete="new-password" minlength="8" required />
+                    <input class="campo pr-16<?= $clase_campo('password') ?>" type="password" id="password" name="password" autocomplete="new-password" minlength="6" required />
                     <button class="campo-ver" type="button" data-ver-password aria-label="Mostrar contraseña" aria-pressed="false">Ver</button>
                   </div>
                   <div class="invalid-feedback block"><?= e($errores['password'] ?? '') ?></div>
@@ -120,7 +129,7 @@ require_once __DIR__ . '/includes/nav.php';
                   <label class="campo-label" for="confirmar">Repetir contraseña</label>
                   <div class="campo-icono">
                     <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
-                    <input class="campo<?= $clase_campo('confirmar') ?>" type="password" id="confirmar" name="confirmar" autocomplete="new-password" required />
+                    <input class="campo<?= $clase_campo('confirmar') ?>" type="password" id="confirmar" name="confirmar" autocomplete="new-password" required data-igual="password" />
                   </div>
                   <div class="invalid-feedback block"><?= e($errores['confirmar'] ?? '') ?></div>
                 </div>

@@ -361,6 +361,57 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  const mensajeError = (campo) => {
+    const valor = campo.value.trim();
+    if (campo.required && !valor) return "Completá este campo.";
+    if ("letras" in campo.dataset && !/^[\p{L} .'-]+$/u.test(valor)) {
+      return "El nombre solo puede tener letras y espacios.";
+    }
+    if (campo.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) {
+      return "Ingresá un email válido.";
+    }
+    if ("gmail" in campo.dataset && !/^[a-z0-9._%+-]+@gmail\.com$/i.test(valor)) {
+      return "Usá un email de Gmail (ej: tunombre@gmail.com).";
+    }
+    if (campo.minLength > 0 && campo.value.length < campo.minLength) {
+      return `Mínimo ${campo.minLength} caracteres (llevás ${campo.value.length}).`;
+    }
+    if (campo.dataset.igual && campo.value !== campo.form.elements[campo.dataset.igual].value) {
+      return "Las contraseñas no coinciden.";
+    }
+    return "";
+  };
+
+  const validarCampo = (campo) => {
+    const mensaje = mensajeError(campo);
+    const aviso = campo.closest(".campo-icono")?.parentElement.querySelector(".invalid-feedback");
+    campo.classList.toggle("is-invalid", Boolean(mensaje));
+    campo.setAttribute("aria-invalid", String(Boolean(mensaje)));
+    if (aviso) aviso.textContent = mensaje;
+    return !mensaje;
+  };
+
+  document.querySelectorAll("form[data-validar]").forEach((formulario) => {
+    const campos = [...formulario.querySelectorAll("input.campo")];
+    campos.forEach((campo) => {
+      campo.addEventListener("input", () => {
+        validarCampo(campo);
+        campos
+          .filter((otro) => otro.dataset.igual === campo.name && otro.value)
+          .forEach(validarCampo);
+      });
+      campo.addEventListener("blur", () => campo.value && validarCampo(campo));
+    });
+    formulario.addEventListener("submit", (evento) => {
+      const validos = campos.map(validarCampo);
+      if (validos.includes(false)) {
+        evento.preventDefault();
+        evento.stopImmediatePropagation();
+        campos[validos.indexOf(false)].focus();
+      }
+    });
+  });
+
   document.querySelectorAll("[data-anio]").forEach((el) => {
     el.textContent = new Date().getFullYear();
   });
