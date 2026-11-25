@@ -284,6 +284,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (document.querySelector("[data-compra-ok]")) guardarCarrito([]);
 
+  if (document.querySelector("[data-pagar-mp]")) {
+    actualizarPago = () => {
+      window.location.href = `${base}pagar.php`;
+    };
+  }
+
   const pago = document.querySelector("[data-pagar]");
   if (pago) {
     const listaPago = pago.querySelector("[data-pagar-lista]");

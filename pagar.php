@@ -128,7 +128,7 @@ $campos_ocultos = function () use ($datos): void {
     foreach (['nombre', 'email', 'metodo'] as $campo) {
         echo '<input type="hidden" name="' . $campo . '" value="' . e($datos[$campo]) . '" />' . "\n";
     }
-    echo '<input type="hidden" name="carrito" data-pagar-carrito value="' . e((string) (filter_input(INPUT_POST, 'carrito') ?? '')) . '" />' . "\n";
+    echo '<input type="hidden" name="carrito" value="' . e((string) (filter_input(INPUT_POST, 'carrito') ?? '')) . '" />' . "\n";
     echo '<input type="hidden" name="csrf" value="' . e(token_csrf()) . '" />' . "\n";
 };
 ?>
@@ -161,7 +161,7 @@ $campos_ocultos = function () use ($datos): void {
         </div>
       </section>
 <?php elseif ($paso_mp) : ?>
-      <section class="seccion bg-[#f5f5f5]" aria-labelledby="titulo-mp">
+      <section class="seccion bg-[#f5f5f5]" aria-labelledby="titulo-mp" data-pagar-mp>
         <div class="contenedor max-w-lg">
           <div class="overflow-hidden rounded-3xl bg-white shadow-lg">
             <div class="flex items-center gap-3 bg-[#009ee3] px-6 py-5 text-white">
