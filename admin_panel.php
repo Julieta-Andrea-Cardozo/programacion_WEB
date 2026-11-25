@@ -16,35 +16,29 @@ require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
       <section class="seccion" aria-labelledby="titulo-panel">
-        <div class="container">
+        <div class="contenedor">
           <p class="eyebrow">Solo administradores</p>
           <h1 class="titulo-seccion" id="titulo-panel">Panel de administración</h1>
           <p class="subtitulo">Sesión de <?= e($_SESSION['usuario_nombre']) ?> · rol <?= e($_SESSION['rol']) ?></p>
           <div class="divisor" aria-hidden="true"></div>
-          <div class="row g-4 mb-5">
-            <div class="col-md-4">
-              <div class="taller text-center h-100">
-                <p class="eyebrow mb-1">Productos</p>
-                <p class="display-5 mb-2"><?= $total_productos ?></p>
-                <a class="btn btn-cafe btn-sm" href="admin/index.php">Administrar productos</a>
-              </div>
+          <div class="mb-12 grid gap-6 md:grid-cols-3">
+            <div class="rounded-3xl bg-espresso p-6 text-center text-crema">
+              <p class="eyebrow mb-1">Productos</p>
+              <p class="mb-3 font-titulo text-5xl font-black text-white"><?= $total_productos ?></p>
+              <a class="btn bg-caramelo px-4 py-2 text-white hover:bg-white hover:text-espresso" href="admin/index.php">Administrar productos</a>
             </div>
-            <div class="col-md-4">
-              <div class="taller text-center h-100">
-                <p class="eyebrow mb-1">Administradores</p>
-                <p class="display-5 mb-0"><?= (int) ($por_rol['admin'] ?? 0) ?></p>
-              </div>
+            <div class="panel text-center">
+              <p class="eyebrow mb-1">Administradores</p>
+              <p class="mb-0 font-titulo text-5xl font-black"><?= (int) ($por_rol['admin'] ?? 0) ?></p>
             </div>
-            <div class="col-md-4">
-              <div class="taller text-center h-100">
-                <p class="eyebrow mb-1">Usuarios registrados</p>
-                <p class="display-5 mb-0"><?= (int) ($por_rol['usuario'] ?? 0) ?></p>
-              </div>
+            <div class="panel text-center">
+              <p class="eyebrow mb-1">Usuarios registrados</p>
+              <p class="mb-0 font-titulo text-5xl font-black"><?= (int) ($por_rol['usuario'] ?? 0) ?></p>
             </div>
           </div>
-          <h2 class="h4">Usuarios</h2>
-          <div class="table-responsive">
-            <table class="table table-borderless align-middle mb-0">
+          <h2 class="mb-4 text-2xl font-bold">Usuarios</h2>
+          <div class="overflow-x-auto rounded-3xl border border-borde bg-white p-2 shadow-sm">
+            <table class="tabla">
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -60,7 +54,7 @@ require_once __DIR__ . '/includes/nav.php';
                   <td><?= (int) $u['id'] ?></td>
                   <td><?= e($u['nombre']) ?></td>
                   <td><?= e($u['email']) ?></td>
-                  <td><span class="badge text-bg-<?= $u['rol'] === 'admin' ? 'dark' : 'secondary' ?>"><?= e($u['rol']) ?></span></td>
+                  <td><span class="badge<?= $u['rol'] === 'admin' ? ' bg-espresso' : '' ?>"><?= e($u['rol']) ?></span></td>
                   <td><?= e(date('d/m/Y H:i', strtotime($u['created_at']))) ?></td>
                 </tr>
 <?php endforeach; ?>

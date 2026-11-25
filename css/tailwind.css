@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  [hidden] {
+    display: none !important;
+  }
+  body {
+    @apply bg-papel font-sans leading-relaxed text-texto antialiased;
+  }
+  ::selection {
+    @apply bg-caramelo/30 text-espresso;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-titulo text-espresso;
+  }
+  a {
+    @apply text-cafe transition-colors hover:text-caramelo;
+  }
+  :focus-visible {
+    @apply outline outline-[3px] outline-offset-2 outline-caramelo;
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply absolute -top-24 left-4 z-[100] rounded-full bg-cafe px-4 py-2 text-white focus:top-4 focus:text-white;
+  }
+  .contenedor {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .seccion {
+    @apply py-16 md:py-24;
+  }
+  .eyebrow {
+    @apply mb-3 font-mono text-xs uppercase tracking-[0.3em] text-caramelo;
+  }
+  .titulo-seccion {
+    @apply mb-2 text-4xl font-black leading-tight md:text-5xl;
+  }
+  .subtitulo {
+    @apply font-titulo text-lg italic text-suave;
+  }
+  .divisor {
+    @apply mb-10 mt-4 flex items-center gap-2;
+  }
+  .divisor::before {
+    content: "";
+    @apply h-px w-12 bg-espresso;
+  }
+  .divisor::after {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-caramelo;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] transition duration-200;
+  }
+  .btn-sm {
+    @apply px-4 py-2;
+  }
+  .btn-cafe {
+    @apply btn bg-cafe text-white shadow-md shadow-cafe/20 hover:-translate-y-0.5 hover:bg-espresso hover:text-white hover:shadow-lg hover:shadow-cafe/30 active:translate-y-0;
+  }
+  .btn-borde {
+    @apply btn border border-espresso/70 text-espresso hover:bg-espresso hover:text-white;
+  }
+  .btn-claro {
+    @apply btn bg-crema text-espresso hover:bg-white hover:text-espresso;
+  }
+  .tarjeta {
+    @apply flex h-full flex-col overflow-hidden rounded-3xl border border-borde bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cafe/10;
+  }
+  .tarjeta-img {
+    @apply aspect-[4/3] w-full object-cover;
+  }
+  .panel {
+    @apply rounded-3xl border border-borde bg-crema-oscura/60 p-6;
+  }
+  .etiqueta {
+    @apply inline-block rounded-full border border-borde bg-crema-oscura px-3 py-1 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-cafe;
+  }
+  .etiqueta-bordo {
+    @apply border-bordo bg-bordo text-white;
+  }
+  .meta {
+    @apply font-mono text-xs text-suave;
+  }
+  .precio {
+    @apply font-titulo text-2xl font-black text-espresso;
+  }
+  .estrellas {
+    @apply tracking-widest text-caramelo;
+  }
+  .campo-label {
+    @apply mb-2 block font-mono text-xs uppercase tracking-[0.2em] text-suave;
+  }
+  .campo {
+    @apply block w-full rounded-xl border border-borde bg-papel px-4 py-3 text-texto placeholder:text-suave/60 transition hover:border-caramelo/60 focus:border-cafe focus:bg-white focus:outline-none focus:ring-4 focus:ring-caramelo/20;
+  }
+  .campo.is-invalid,
+  .was-validated .campo:invalid {
+    @apply border-bordo focus:ring-bordo/20;
+  }
+  .invalid-feedback {
+    @apply mt-1 hidden text-sm text-bordo;
+  }
+  .is-invalid ~ .invalid-feedback,
+  .was-validated .campo:invalid ~ .invalid-feedback {
+    @apply block;
+  }
+  .alerta {
+    @apply mb-4 rounded-2xl border px-4 py-3 text-sm;
+  }
+  .alerta-success {
+    @apply border-emerald-200 bg-emerald-50 text-emerald-900;
+  }
+  .alerta-warning {
+    @apply border-amber-200 bg-amber-50 text-amber-900;
+  }
+  .alerta-danger {
+    @apply border-red-200 bg-red-50 text-red-900;
+  }
+  .alerta-light {
+    @apply border-borde bg-white text-texto;
+  }
+  .badge {
+    @apply inline-block rounded-full bg-suave px-3 py-0.5 font-mono text-xs text-white;
+  }
+  .tabla {
+    @apply w-full text-left text-sm;
+  }
+  .tabla th {
+    @apply border-b border-borde px-4 py-3 font-mono text-xs uppercase tracking-[0.15em] text-suave;
+  }
+  .tabla td {
+    @apply border-b border-borde/60 px-4 py-3 align-middle;
+  }
+  .tabla tbody tr {
+    @apply transition-colors hover:bg-crema/60;
+  }
+  .nav-link {
+    @apply border-b-2 border-transparent py-1 whitespace-nowrap font-mono text-xs uppercase tracking-[0.1em] text-suave transition hover:border-borde hover:text-cafe;
+  }
+  .nav-link.active {
+    @apply border-caramelo text-cafe;
+  }
+  .tab-boton {
+    @apply btn border border-borde bg-white text-cafe hover:border-cafe;
+  }
+  .tab-boton[aria-selected="true"] {
+    @apply border-cafe bg-cafe text-white;
+  }
+  .pasos {
+    counter-reset: paso;
+    @apply space-y-3;
+  }
+  .pasos li {
+    counter-increment: paso;
+    @apply flex gap-3;
+  }
+  .pasos li::before {
+    content: counter(paso);
+    @apply grid h-7 w-7 flex-none place-items-center rounded-full bg-caramelo font-mono text-xs text-white;
+  }
+  .galeria-item {
+    @apply relative m-0 h-full overflow-hidden rounded-3xl;
+  }
+  .galeria-item img {
+    @apply h-full w-full object-cover transition duration-500;
+  }
+  .galeria-item:hover img {
+    @apply scale-105;
+  }
+  .galeria-item figcaption {
+    @apply absolute inset-x-0 bottom-0 bg-gradient-to-t from-espresso/90 to-transparent px-5 pb-4 pt-10 font-mono text-xs uppercase tracking-[0.15em] text-white;
+  }
+  .dropdown-item {
+    @apply block rounded-xl px-4 py-2 text-sm text-texto hover:bg-crema hover:text-cafe;
+  }
+}
+
+@layer components {
+  .auth {
+    @apply grid overflow-hidden rounded-[2rem] border border-borde bg-white shadow-2xl shadow-cafe/10 lg:grid-cols-2;
+  }
+  .auth-imagen {
+    @apply relative hidden min-h-[34rem] flex-col p-10 lg:flex;
+  }
+  .auth-imagen img {
+    @apply absolute inset-0 h-full w-full object-cover;
+  }
+  .auth-imagen::after {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-t from-espresso via-espresso/60 to-espresso/10;
+  }
+  .auth-form {
+    @apply flex flex-col justify-center p-8 sm:p-12;
+  }
+  .campo-icono {
+    @apply relative;
+  }
+  .campo-icono .campo {
+    @apply pl-11;
+  }
+  .campo-icono-svg {
+    @apply pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-suave/70;
+  }
+  .campo-icono:focus-within .campo-icono-svg {
+    @apply text-cafe;
+  }
+  .campo-ver {
+    @apply absolute right-2 top-1/2 -translate-y-1/2 rounded-lg px-3 py-1.5 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-suave transition hover:bg-crema hover:text-cafe;
+  }
+  .icono-circulo {
+    @apply mb-5 grid h-14 w-14 place-items-center rounded-2xl bg-crema text-cafe ring-1 ring-borde transition duration-300;
+  }
+  .tarjeta:hover .icono-circulo {
+    @apply bg-cafe text-white ring-cafe;
+  }
+}

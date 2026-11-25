@@ -22,44 +22,40 @@ require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
       <section class="seccion" aria-labelledby="titulo-cuenta">
-        <div class="container">
+        <div class="contenedor">
           <p class="eyebrow">Área privada</p>
           <h1 class="titulo-seccion" id="titulo-cuenta">Hola, <?= e($_SESSION['usuario_nombre']) ?></h1>
           <p class="subtitulo">Esta página solo se ve con la sesión iniciada</p>
           <div class="divisor" aria-hidden="true"></div>
 <?php if ($sin_permiso) : ?>
-          <div class="alert alert-warning" role="alert">
+          <div class="alerta alerta-warning" role="alert">
             No tenés permisos para entrar a esa sección (requiere rol administrador).
           </div>
 <?php endif; ?>
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="taller h-100">
-                <h2 class="h4">Mis datos</h2>
-                <dl class="row mb-0">
-                  <dt class="col-sm-4">Nombre</dt>
-                  <dd class="col-sm-8"><?= e($usuario['nombre']) ?></dd>
-                  <dt class="col-sm-4">Email</dt>
-                  <dd class="col-sm-8"><?= e($usuario['email']) ?></dd>
-                  <dt class="col-sm-4">Rol</dt>
-                  <dd class="col-sm-8"><span class="badge text-bg-secondary"><?= e($usuario['rol']) ?></span></dd>
-                  <dt class="col-sm-4">Alta</dt>
-                  <dd class="col-sm-8"><?= e(date('d/m/Y', strtotime($usuario['created_at']))) ?></dd>
-                </dl>
-              </div>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="panel">
+              <h2 class="mb-4 text-2xl font-bold">Mis datos</h2>
+              <dl class="grid grid-cols-3 gap-y-3">
+                <dt class="meta uppercase tracking-[0.15em]">Nombre</dt>
+                <dd class="col-span-2"><?= e($usuario['nombre']) ?></dd>
+                <dt class="meta uppercase tracking-[0.15em]">Email</dt>
+                <dd class="col-span-2"><?= e($usuario['email']) ?></dd>
+                <dt class="meta uppercase tracking-[0.15em]">Rol</dt>
+                <dd class="col-span-2"><span class="badge"><?= e($usuario['rol']) ?></span></dd>
+                <dt class="meta uppercase tracking-[0.15em]">Alta</dt>
+                <dd class="col-span-2"><?= e(date('d/m/Y', strtotime($usuario['created_at']))) ?></dd>
+              </dl>
             </div>
-            <div class="col-md-6">
-              <div class="taller h-100">
-                <h2 class="h4">Accesos rápidos</h2>
-                <ul class="mb-3">
-                  <li><a href="tienda.php">Ir a la tienda</a></li>
-                  <li><a href="talleres.php">Ver talleres disponibles</a></li>
+            <div class="panel">
+              <h2 class="mb-4 text-2xl font-bold">Accesos rápidos</h2>
+              <ul class="mb-6 list-inside list-disc space-y-1">
+                <li><a href="tienda.php">Ir a la tienda</a></li>
+                <li><a href="talleres.php">Ver talleres disponibles</a></li>
 <?php if (es_admin()) : ?>
-                  <li><a href="admin_panel.php">Panel de administración</a></li>
+                <li><a href="admin_panel.php">Panel de administración</a></li>
 <?php endif; ?>
-                </ul>
-                <a class="btn btn-borde" href="logout.php">Cerrar sesión</a>
-              </div>
+              </ul>
+              <a class="btn-borde" href="logout.php">Cerrar sesión</a>
             </div>
           </div>
         </div>

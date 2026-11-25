@@ -11,6 +11,7 @@ if (usuario_logueado()) {
 }
 
 $datos = ['nombre' => '', 'email' => ''];
+$volver = (filter_input(INPUT_POST, 'volver') ?? filter_input(INPUT_GET, 'volver')) === 'pagar' ? 'pagar' : '';
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':password' => password_hash($password, PASSWORD_BCRYPT),
                 ':rol' => 'usuario',
             ]);
-            header('Location: login.php?estado=registro_ok');
+            header('Location: login.php?estado=registro_ok' . ($volver ? '&volver=pagar' : ''));
             exit;
         }
     }
@@ -68,78 +69,67 @@ require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
-      <section class="seccion seccion-papel" aria-labelledby="titulo-registro">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
+      <section class="seccion bg-crema" aria-labelledby="titulo-registro">
+        <div class="contenedor max-w-5xl">
+          <div class="auth">
+            <div class="auth-imagen">
+              <img src="img/latte.jpg" alt="" loading="lazy" />
+              <div class="relative z-10 mt-auto">
+                <p class="eyebrow text-crema-oscura">Barismo &amp; Café</p>
+                <p class="font-titulo text-3xl font-bold leading-snug text-white">Sumate a la comunidad cafetera.</p>
+                <p class="mt-3 text-sm text-crema-oscura/90">Con tu cuenta comprás en la tienda y te anotás en los talleres de barismo y arte latte.</p>
+              </div>
+            </div>
+            <div class="auth-form">
               <p class="eyebrow">Mi cuenta</p>
-              <h1 class="titulo-seccion" id="titulo-registro">Crear cuenta</h1>
-              <p class="subtitulo">Comprá en la tienda y anotate en los talleres</p>
-              <div class="divisor" aria-hidden="true"></div>
+              <h1 class="mb-2 text-4xl font-black" id="titulo-registro">Crear cuenta</h1>
+              <p class="subtitulo mb-8">Tarda menos que preparar un espresso</p>
 <?php if (isset($errores['general'])) : ?>
-              <div class="alert alert-danger" role="alert"><?= e($errores['general']) ?></div>
+              <div class="alerta alerta-danger" role="alert"><?= e($errores['general']) ?></div>
 <?php endif; ?>
-              <form class="taller form-barismo p-4" method="post" action="registro.php" novalidate>
+              <form class="space-y-5" method="post" action="registro.php" novalidate>
                 <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
-                <div class="mb-3">
-                  <label class="form-label" for="nombre">Nombre</label>
-                  <input
-                    class="form-control<?= $clase_campo('nombre') ?>"
-                    type="text"
-                    id="nombre"
-                    name="nombre"
-                    value="<?= e($datos['nombre']) ?>"
-                    autocomplete="name"
-                    minlength="3"
-                    maxlength="60"
-                    required
-                  />
-                  <div class="invalid-feedback"><?= e($errores['nombre'] ?? '') ?></div>
-                </div>
-                <div class="mb-3">
-                  <label class="form-label" for="email">Email</label>
-                  <input
-                    class="form-control<?= $clase_campo('email') ?>"
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<?= e($datos['email']) ?>"
-                    autocomplete="email"
-                    maxlength="120"
-                    required
-                  />
-                  <div class="invalid-feedback"><?= e($errores['email'] ?? '') ?></div>
-                </div>
-                <div class="row g-3 mb-4">
-                  <div class="col-sm-6">
-                    <label class="form-label" for="password">Contraseña</label>
-                    <input
-                      class="form-control<?= $clase_campo('password') ?>"
-                      type="password"
-                      id="password"
-                      name="password"
-                      autocomplete="new-password"
-                      minlength="8"
-                      required
-                    />
-                    <div class="invalid-feedback"><?= e($errores['password'] ?? '') ?></div>
+                <input type="hidden" name="volver" value="<?= e($volver) ?>" />
+                <div>
+                  <label class="campo-label" for="nombre">Nombre</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                    <input class="campo<?= $clase_campo('nombre') ?>" type="text" id="nombre" name="nombre" value="<?= e($datos['nombre']) ?>" autocomplete="name" minlength="3" maxlength="60" required />
                   </div>
-                  <div class="col-sm-6">
-                    <label class="form-label" for="confirmar">Repetir contraseña</label>
-                    <input
-                      class="form-control<?= $clase_campo('confirmar') ?>"
-                      type="password"
-                      id="confirmar"
-                      name="confirmar"
-                      autocomplete="new-password"
-                      required
-                    />
-                    <div class="invalid-feedback"><?= e($errores['confirmar'] ?? '') ?></div>
-                  </div>
+                  <div class="invalid-feedback block"><?= e($errores['nombre'] ?? '') ?></div>
                 </div>
-                <button class="btn btn-cafe w-100" type="submit">Crear cuenta</button>
+                <div>
+                  <label class="campo-label" for="email">Email</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" /></svg>
+                    <input class="campo<?= $clase_campo('email') ?>" type="email" id="email" name="email" value="<?= e($datos['email']) ?>" autocomplete="email" maxlength="120" placeholder="tu@email.com" required />
+                  </div>
+                  <div class="invalid-feedback block"><?= e($errores['email'] ?? '') ?></div>
+                </div>
+                <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label class="campo-label" for="password">Contraseña</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+                    <input class="campo pr-16<?= $clase_campo('password') ?>" type="password" id="password" name="password" autocomplete="new-password" minlength="8" required />
+                    <button class="campo-ver" type="button" data-ver-password aria-label="Mostrar contraseña" aria-pressed="false">Ver</button>
+                  </div>
+                  <div class="invalid-feedback block"><?= e($errores['password'] ?? '') ?></div>
+                </div>
+                <div>
+                  <label class="campo-label" for="confirmar">Repetir contraseña</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+                    <input class="campo<?= $clase_campo('confirmar') ?>" type="password" id="confirmar" name="confirmar" autocomplete="new-password" required />
+                  </div>
+                  <div class="invalid-feedback block"><?= e($errores['confirmar'] ?? '') ?></div>
+                </div>
+                </div>
+                <button class="btn-cafe w-full" type="submit">Crear cuenta</button>
               </form>
-              <p class="mt-3 text-center">¿Ya tenés cuenta? <a href="login.php">Ingresá</a></p>
+              <p class="mt-8 border-t border-borde pt-6 text-center text-sm text-suave">
+                ¿Ya tenés cuenta? <a class="font-semibold" href="login.php<?= $volver ? '?volver=pagar' : '' ?>">Ingresá</a>
+              </p>
             </div>
           </div>
         </div>
