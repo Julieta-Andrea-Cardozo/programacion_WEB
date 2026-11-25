@@ -83,7 +83,7 @@ require_once __DIR__ . '/includes/nav.php';
 <?php if ($error) : ?>
               <div class="alerta alerta-danger" role="alert"><?= e($error) ?></div>
 <?php endif; ?>
-              <form class="space-y-5" method="post" action="login.php" novalidate>
+              <form class="space-y-5" method="post" action="login.php" novalidate data-validar>
                 <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
                 <input type="hidden" name="volver" value="<?= e($volver) ?>" />
                 <div>
@@ -92,6 +92,7 @@ require_once __DIR__ . '/includes/nav.php';
                     <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" /></svg>
                     <input class="campo" type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" placeholder="tu@email.com" required />
                   </div>
+                  <div class="invalid-feedback block"></div>
                 </div>
                 <div>
                   <label class="campo-label" for="password">Contraseña</label>
@@ -100,6 +101,7 @@ require_once __DIR__ . '/includes/nav.php';
                     <input class="campo pr-16" type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
                     <button class="campo-ver" type="button" data-ver-password aria-label="Mostrar contraseña" aria-pressed="false">Ver</button>
                   </div>
+                  <div class="invalid-feedback block"></div>
                 </div>
                 <button class="btn-cafe w-full" type="submit">Ingresar</button>
               </form>
