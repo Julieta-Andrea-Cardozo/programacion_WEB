@@ -339,6 +339,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  document.querySelectorAll("[data-ver-password]").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const campo = boton.parentElement.querySelector("input");
+      const visible = campo.type === "password";
+      campo.type = visible ? "text" : "password";
+      boton.textContent = visible ? "Ocultar" : "Ver";
+      boton.setAttribute("aria-pressed", String(visible));
+      boton.setAttribute("aria-label", visible ? "Ocultar contraseña" : "Mostrar contraseña");
+    });
+  });
+
   document.querySelectorAll("[data-anio]").forEach((el) => {
     el.textContent = new Date().getFullYear();
   });

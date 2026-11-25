@@ -14,7 +14,7 @@ $paginas = [
 
 $pagina_actual = $pagina_actual ?? basename($_SERVER['SCRIPT_NAME'], '.php');
 ?>
-    <header class="sticky top-0 z-40 border-b border-borde bg-papel/90 backdrop-blur">
+    <header class="sticky top-0 z-40 border-b border-borde/80 bg-papel/85 shadow-sm shadow-cafe/5 backdrop-blur-md">
       <nav class="contenedor flex flex-wrap items-center justify-between gap-4 py-4 xl:flex-nowrap" aria-label="Navegación principal">
         <a class="flex items-center gap-2 font-titulo text-2xl font-bold italic text-cafe hover:text-cafe" href="<?= $base ?>index.php">
           <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">

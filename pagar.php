@@ -31,6 +31,17 @@ $total = 0;
 $pedido = null;
 $paso_mp = false;
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && usuario_logueado()) {
+    $datos['nombre'] = (string) $_SESSION['usuario_nombre'];
+    try {
+        $stmt = $pdo->prepare('SELECT email FROM usuarios WHERE id = :id');
+        $stmt->execute([':id' => $_SESSION['usuario_id']]);
+        $datos['email'] = (string) $stmt->fetchColumn();
+    } catch (Throwable $e) {
+        // Sin base de datos se completa solo el nombre.
+    }
+}
+
 function luhn_valido(string $numero): bool
 {
     $suma = 0;
@@ -197,7 +208,14 @@ $campos_ocultos = function () use ($datos): void {
             <input type="hidden" name="carrito" value="" data-pagar-carrito />
             <div class="space-y-6 lg:col-span-7">
               <div class="panel" role="group" aria-labelledby="paso-datos">
-                <h2 class="eyebrow mb-4" id="paso-datos">1 · Tus datos</h2>
+                <div class="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+                  <h2 class="eyebrow mb-0" id="paso-datos">1 · Tus datos</h2>
+<?php if (usuario_logueado()) : ?>
+                  <span class="meta">Sesión iniciada como <?= e($_SESSION['usuario_nombre']) ?></span>
+<?php else : ?>
+                  <a class="meta font-medium text-cafe" href="login.php?volver=pagar">¿Tenés cuenta? Ingresá →</a>
+<?php endif; ?>
+                </div>
                 <div class="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label class="campo-label" for="nombre">Nombre y apellido</label>

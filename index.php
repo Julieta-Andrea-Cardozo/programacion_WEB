@@ -91,7 +91,7 @@ require_once __DIR__ . '/includes/nav.php';
           <div class="divisor" aria-hidden="true"></div>
           <div class="grid gap-6 md:grid-cols-3">
             <div class="tarjeta p-8">
-              <span class="mb-4 text-4xl" aria-hidden="true">☕</span>
+              <span class="icono-circulo" aria-hidden="true"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v4a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V9Z" /><path d="M17 10.5h1.5a2.5 2.5 0 0 1 0 5H17" /><path d="M8 3c0 1.3 1 1.3 1 2.6M12 3c0 1.3 1 1.3 1 2.6" /></svg></span>
               <h3 class="mb-2 text-2xl font-bold">Nuestro menú</h3>
               <p class="mb-6 text-suave">
                 Espressos, bebidas con leche y fríos preparados con granos de origen único.
@@ -99,7 +99,7 @@ require_once __DIR__ . '/includes/nav.php';
               <a class="btn-borde mt-auto self-start" href="menu.php">Ver nuestro menú →</a>
             </div>
             <div class="tarjeta p-8">
-              <span class="mb-4 text-4xl" aria-hidden="true">🥛</span>
+              <span class="icono-circulo" aria-hidden="true"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h14l-2 13a2 2 0 0 1-2 1.7H9A2 2 0 0 1 7 19L5 6Z" /><path d="M9 12c1-1.2 2-1.2 3 0s2 1.2 3 0" /><path d="M12 9.5v.01" /></svg></span>
               <h3 class="mb-2 text-2xl font-bold">Talleres</h3>
               <p class="mb-6 text-suave">
                 Aprendé barismo y arte latte con nuestro equipo, desde cero hasta nivel avanzado.
@@ -107,7 +107,7 @@ require_once __DIR__ . '/includes/nav.php';
               <a class="btn-borde mt-auto self-start" href="talleres.php">Ver talleres →</a>
             </div>
             <div class="tarjeta p-8">
-              <span class="mb-4 text-4xl" aria-hidden="true">🛍️</span>
+              <span class="icono-circulo" aria-hidden="true"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.3 11.3A2 2 0 0 1 15.7 21H8.3a2 2 0 0 1-2-1.7L5 8Z" /><path d="M9 11V6a3 3 0 0 1 6 0v5" /></svg></span>
               <h3 class="mb-2 text-2xl font-bold">Tienda</h3>
               <p class="mb-6 text-suave">
                 Café en grano tostado artesanalmente e insumos para preparar en casa.

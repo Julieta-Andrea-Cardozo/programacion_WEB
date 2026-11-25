@@ -6,7 +6,7 @@ $pagina_actual = 'login';
 require_once __DIR__ . '/config/sesion.php';
 
 if (usuario_logueado()) {
-    header('Location: ' . (es_admin() ? 'admin_panel.php' : 'cuenta.php'));
+    header('Location: ' . (filter_input(INPUT_GET, 'volver') === 'pagar' ? 'pagar.php' : (es_admin() ? 'admin_panel.php' : 'cuenta.php')));
     exit;
 }
 
@@ -20,6 +20,8 @@ $aviso = $avisos[$clave_aviso] ?? null;
 
 $email = '';
 $error = '';
+$volver = (string) (filter_input(INPUT_POST, 'volver') ?? filter_input(INPUT_GET, 'volver') ?? '');
+$volver = $volver === 'pagar' ? 'pagar' : '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim((string) (filter_input(INPUT_POST, 'email') ?? ''));
@@ -43,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['rol'] = $usuario['rol'];
             unset($_SESSION['csrf']);
 
-            header('Location: ' . ($usuario['rol'] === 'admin' ? 'admin_panel.php' : 'cuenta.php'));
+            $destino = $usuario['rol'] === 'admin' ? 'admin_panel.php' : 'cuenta.php';
+            header('Location: ' . ($volver === 'pagar' ? 'pagar.php' : $destino));
             exit;
         }
 
@@ -57,30 +60,54 @@ require_once __DIR__ . '/includes/nav.php';
 ?>
     <main id="contenido">
       <section class="seccion bg-crema" aria-labelledby="titulo-login">
-        <div class="contenedor max-w-lg">
-          <p class="eyebrow">Mi cuenta</p>
-          <h1 class="titulo-seccion" id="titulo-login">Ingresar</h1>
-          <p class="subtitulo">Accedé a tu cuenta de Barismo &amp; Café</p>
-          <div class="divisor" aria-hidden="true"></div>
+        <div class="contenedor max-w-5xl">
+          <div class="auth">
+            <div class="auth-imagen">
+              <img src="img/salon.jpg" alt="" loading="lazy" />
+              <div class="relative z-10 mt-auto">
+                <p class="eyebrow text-crema-oscura">Barismo &amp; Café</p>
+                <p class="font-titulo text-3xl font-bold leading-snug text-white">“Cada taza empieza con una buena bienvenida.”</p>
+                <p class="mt-3 text-sm text-crema-oscura/90">Ingresá para comprar más rápido, ver tu cuenta y anotarte en los talleres.</p>
+              </div>
+            </div>
+            <div class="auth-form">
+              <p class="eyebrow">Mi cuenta</p>
+              <h1 class="mb-2 text-4xl font-black" id="titulo-login">Ingresar</h1>
+              <p class="subtitulo mb-8">Qué bueno verte de nuevo</p>
 <?php if ($aviso) : ?>
-          <div class="alerta alerta-<?= e($aviso[0]) ?>" role="status"><?= e($aviso[1]) ?></div>
+              <div class="alerta alerta-<?= e($aviso[0]) ?>" role="status"><?= e($aviso[1]) ?></div>
+<?php endif; ?>
+<?php if ($volver === 'pagar') : ?>
+              <div class="alerta alerta-light" role="status">Ingresá y volvés directo al pago de tu pedido.</div>
 <?php endif; ?>
 <?php if ($error) : ?>
-          <div class="alerta alerta-danger" role="alert"><?= e($error) ?></div>
+              <div class="alerta alerta-danger" role="alert"><?= e($error) ?></div>
 <?php endif; ?>
-          <form class="space-y-5 rounded-[2rem] border border-borde bg-white p-6 shadow-sm md:p-8" method="post" action="login.php" novalidate>
-            <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
-            <div>
-              <label class="campo-label" for="email">Email</label>
-              <input class="campo" type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" required />
+              <form class="space-y-5" method="post" action="login.php" novalidate>
+                <input type="hidden" name="csrf" value="<?= e(token_csrf()) ?>" />
+                <input type="hidden" name="volver" value="<?= e($volver) ?>" />
+                <div>
+                  <label class="campo-label" for="email">Email</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16v12H4z" /><path d="m4 7 8 6 8-6" /></svg>
+                    <input class="campo" type="email" id="email" name="email" value="<?= e($email) ?>" autocomplete="email" placeholder="tu@email.com" required />
+                  </div>
+                </div>
+                <div>
+                  <label class="campo-label" for="password">Contraseña</label>
+                  <div class="campo-icono">
+                    <svg class="campo-icono-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+                    <input class="campo pr-16" type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required />
+                    <button class="campo-ver" type="button" data-ver-password aria-label="Mostrar contraseña" aria-pressed="false">Ver</button>
+                  </div>
+                </div>
+                <button class="btn-cafe w-full" type="submit">Ingresar</button>
+              </form>
+              <p class="mt-8 border-t border-borde pt-6 text-center text-sm text-suave">
+                ¿No tenés cuenta? <a class="font-semibold" href="registro.php">Creala gratis</a>
+              </p>
             </div>
-            <div>
-              <label class="campo-label" for="password">Contraseña</label>
-              <input class="campo" type="password" id="password" name="password" autocomplete="current-password" required />
-            </div>
-            <button class="btn-cafe w-full" type="submit">Ingresar</button>
-          </form>
-          <p class="mt-4 text-center">¿No tenés cuenta? <a class="font-semibold" href="registro.php">Registrate</a></p>
+          </div>
         </div>
       </section>
     </main>

@@ -1,4 +1,4 @@
-    <footer class="mt-auto bg-espresso pb-8 pt-16 text-crema-oscura">
+    <footer class="mt-auto border-t-4 border-caramelo bg-espresso pb-8 pt-16 text-crema-oscura">
       <div class="contenedor">
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-12">
           <div class="lg:col-span-4">
