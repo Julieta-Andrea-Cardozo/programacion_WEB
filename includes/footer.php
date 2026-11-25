@@ -79,7 +79,6 @@
           <span class="meta uppercase tracking-[0.2em]">Total</span>
           <span class="precio" data-carrito-total>$0</span>
         </div>
-        <p class="alerta alerta-success mb-0 hidden" role="status" data-carrito-ok></p>
         <div class="flex gap-2">
           <button class="btn-borde btn-sm flex-1" type="button" data-carrito-vaciar>Vaciar</button>
           <button class="btn-cafe btn-sm flex-1" type="button" data-carrito-finalizar>Finalizar compra</button>

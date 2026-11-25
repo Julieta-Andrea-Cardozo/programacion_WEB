@@ -21,6 +21,7 @@ de los wireframes de Figma.
 | HTML5 semántico                 | Estructura de las 10 vistas                                            |
 | Tailwind CSS 3.4                | Estilo de cafetería: fuente en `css/tailwind.css`, compilado en `css/styles.css` |
 | JavaScript (localStorage)       | Carrito con cantidades, total y panel lateral (`js/main.js`)           |
+| PHP (checkout simulado)         | `pagar.php`: pago con tarjeta de débito (validación Luhn, vencimiento, CVV, DNI) o Mercado Pago simulado |
 | JavaScript                      | Carrito con `localStorage` y validación del formulario (`js/main.js`)  |
 | Google Fonts                    | Playfair Display, Inter y DM Mono                                      |
 | Prettier 3                      | Formateo del código                                                    |

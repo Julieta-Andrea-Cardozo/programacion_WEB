@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const lista = document.querySelector("[data-carrito-lista]");
   const vacio = document.querySelector("[data-carrito-vacio]");
   const total = document.querySelector("[data-carrito-total]");
-  const confirmacion = document.querySelector("[data-carrito-ok]");
   const toast = document.querySelector("[data-toast]");
   const base = (document.querySelector('link[rel="icon"]')?.getAttribute("href") || "").replace(
     "img/favicon.svg",
@@ -126,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
     panel.setAttribute("aria-hidden", "true");
     fondo.classList.add("hidden");
     document.body.classList.remove("overflow-hidden");
-    confirmacion.classList.add("hidden");
     fueraDelCarrito().forEach((el) => (el.inert = false));
     panel.inert = true;
     disparador?.focus();
@@ -193,10 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (objetivo.closest("[data-carrito-vaciar]")) {
       guardarCarrito([]);
     } else if (objetivo.closest("[data-carrito-finalizar]") && carrito.length) {
-      const importe = formatoPrecio(importeTotal(carrito));
-      guardarCarrito([]);
-      confirmacion.textContent = `¡Gracias! Pedido de demostración por ${importe}: en esta versión no se procesan pagos.`;
-      confirmacion.classList.remove("hidden");
+      window.location.href = `${base}pagar.php`;
     }
   });
 
@@ -272,6 +267,48 @@ document.addEventListener("DOMContentLoaded", () => {
       formulario.classList.remove("was-validated");
       formulario.reset();
       ok.classList.remove("hidden");
+    });
+  }
+
+  if (document.querySelector("[data-compra-ok]")) guardarCarrito([]);
+
+  const pago = document.querySelector("[data-pagar]");
+  if (pago) {
+    const carrito = leerCarrito();
+    const listaPago = pago.querySelector("[data-pagar-lista]");
+    carrito.forEach((item) => {
+      const fila = crear("li", "flex justify-between gap-3 py-2");
+      fila.append(
+        crear("span", "", `${item.cantidad} × ${item.nombre}`),
+        crear("span", "font-titulo font-bold", formatoPrecio(item.precio * item.cantidad)),
+      );
+      listaPago.append(fila);
+    });
+    pago.querySelector("[data-pagar-total]").textContent = formatoPrecio(importeTotal(carrito));
+    pago.querySelector("[data-pagar-vacio]").hidden = carrito.length > 0;
+    pago.querySelector("[data-pagar-boton]").disabled = carrito.length === 0;
+    pago.querySelector("[data-pagar-carrito]").value = JSON.stringify(
+      carrito.map(({ nombre, cantidad }) => ({ nombre, cantidad })),
+    );
+
+    const boton = pago.querySelector("[data-pagar-boton]");
+    const actualizarMetodo = () => {
+      const metodo = pago.querySelector("[data-metodo]:checked")?.value;
+      pago.querySelectorAll("[data-panel-metodo]").forEach((p) => {
+        p.hidden = p.dataset.panelMetodo !== metodo;
+      });
+      boton.textContent = metodo === "mercadopago" ? "Continuar a Mercado Pago" : "Pagar con débito";
+    };
+    pago.querySelectorAll("[data-metodo]").forEach((r) => r.addEventListener("change", actualizarMetodo));
+    actualizarMetodo();
+
+    pago.querySelector("[data-tarjeta]")?.addEventListener("input", (evento) => {
+      const digitos = evento.target.value.replace(/\D/g, "").slice(0, 16);
+      evento.target.value = digitos.replace(/(.{4})(?=.)/g, "$1 ");
+    });
+    pago.querySelector("[data-vencimiento]")?.addEventListener("input", (evento) => {
+      const digitos = evento.target.value.replace(/\D/g, "").slice(0, 4);
+      evento.target.value = digitos.length > 2 ? `${digitos.slice(0, 2)}/${digitos.slice(2)}` : digitos;
     });
   }
 
