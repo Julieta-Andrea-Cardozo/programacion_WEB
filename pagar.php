@@ -117,7 +117,7 @@ $campos_ocultos = function () use ($datos): void {
     foreach (['nombre', 'email', 'metodo'] as $campo) {
         echo '<input type="hidden" name="' . $campo . '" value="' . e($datos[$campo]) . '" />' . "\n";
     }
-    echo '<input type="hidden" name="carrito" value="' . e((string) (filter_input(INPUT_POST, 'carrito') ?? '')) . '" />' . "\n";
+    echo '<input type="hidden" name="carrito" data-pagar-carrito value="' . e((string) (filter_input(INPUT_POST, 'carrito') ?? '')) . '" />' . "\n";
     echo '<input type="hidden" name="csrf" value="' . e(token_csrf()) . '" />' . "\n";
 };
 ?>

@@ -202,7 +202,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   window.addEventListener("storage", (evento) => {
-    if (evento.key === CLAVE_CARRITO) renderizarCarrito(leerCarrito());
+    if (evento.key === CLAVE_CARRITO) {
+      renderizarCarrito(leerCarrito());
+      actualizarPago(leerCarrito());
+    }
+  });
+
+  document.addEventListener("submit", (evento) => {
+    const campo = evento.target.querySelector("[data-pagar-carrito]");
+    if (campo) {
+      campo.value = JSON.stringify(leerCarrito().map(({ nombre, cantidad }) => ({ nombre, cantidad })));
+    }
   });
 
   const botonMenu = document.querySelector("[data-menu-toggle]");
