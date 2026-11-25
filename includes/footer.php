@@ -38,9 +38,6 @@
         </div>
         <p class="mt-12 border-t border-crema-oscura/20 pt-6 text-center font-mono text-xs text-crema-oscura/70">
           © <?= date('Y') ?> <?= e(APP_NAME) ?> · Trabajo práctico de Programación Web · Julieta Andrea Cardozo
-<?php if (APP_ENV === 'local') : ?>
-          · Entorno: <?= e(APP_ENV) ?>
-<?php endif; ?>
         </p>
       </div>
     </footer>

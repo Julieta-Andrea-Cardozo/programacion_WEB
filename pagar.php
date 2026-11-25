@@ -155,7 +155,6 @@ $campos_ocultos = function () use ($datos): void {
             </ul>
             <p class="meta mb-1">Pagado con <?= e($pedido['metodo']) ?></p>
             <p class="meta mb-6">Te enviamos el comprobante a <?= e($datos['email']) ?></p>
-            <p class="alerta alerta-light">Proyecto académico: el pago es simulado y no se realiza ningún cobro.</p>
             <a class="btn-cafe" href="tienda.php">Volver a la tienda</a>
           </div>
         </div>
@@ -186,7 +185,6 @@ $campos_ocultos = function () use ($datos): void {
               <form method="get" action="pagar.php">
                 <button class="w-full rounded-xl px-6 py-3 font-semibold text-[#009ee3] hover:bg-sky-50" type="submit">Volver a Barismo &amp; Café</button>
               </form>
-              <p class="meta mb-0 text-center">Simulación para el proyecto: no se realiza ningún cobro.</p>
             </div>
           </div>
         </div>
@@ -251,7 +249,6 @@ $campos_ocultos = function () use ($datos): void {
                     <label class="campo-label" for="numero">Número de tarjeta</label>
                     <input class="campo font-mono<?= $clase_campo('numero') ?>" type="text" id="numero" name="numero" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19" data-tarjeta />
                     <div class="invalid-feedback"><?= e($errores['numero'] ?? '') ?></div>
-                    <p class="meta mb-0 mt-1">Para probar: 4509 9535 6623 3704</p>
                   </div>
                   <div class="sm:col-span-6">
                     <label class="campo-label" for="titular">Nombre del titular</label>
@@ -296,7 +293,6 @@ $campos_ocultos = function () use ($datos): void {
                   <span class="precio" data-pagar-total>$0</span>
                 </div>
                 <button class="btn-cafe w-full" type="submit" data-pagar-boton>Pagar</button>
-                <p class="meta mb-0 mt-3 text-center">Pago simulado para el proyecto: no se realiza ningún cobro.</p>
               </div>
             </aside>
           </form>
