@@ -54,13 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($catalogo[$nombre]) && $cantidad > 0 && $cantidad <= 99) {
             $items[] = ['nombre' => $nombre, 'cantidad' => $cantidad, 'precio' => $catalogo[$nombre]['precio']];
             $total += $catalogo[$nombre]['precio'] * $cantidad;
+        } else {
+            $errores['general'] = 'Hay productos del carrito que ya no están disponibles o superan las 99 unidades. Quitalos y volvé a intentar.';
         }
     }
 
     if (!csrf_valido()) {
         $errores['general'] = 'La sesión expiró. Recargá la página e intentá de nuevo.';
     }
-    if (!$items) {
+    if (!$items && !isset($errores['general'])) {
         $errores['general'] = 'Tu carrito está vacío. Agregá productos desde la tienda.';
     }
     if (largo($datos['nombre']) < 3) {
