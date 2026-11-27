@@ -408,6 +408,37 @@ Requiere PHP 8.2+ y Composer. Instrucciones en [`clase10/laravel/README.md`](cla
 | **MVC nativo: edición**                               | **Laravel: detalle de producto**                          |
 | ![Editar](clase10/docs/capturas/mvc-editar.png)       | ![Detalle](clase10/docs/capturas/laravel-detalle.png)     |
 
+## Roles y CRUD con la base de datos (versión final)
+
+Capturas del sitio final (carpeta raíz) funcionando con MySQL. Hay dos roles en la tabla `usuarios`:
+
+| Rol       | Cómo se obtiene                         | Qué puede hacer                                                   |
+| --------- | --------------------------------------- | ----------------------------------------------------------------- |
+| `usuario` | Registrándose en `registro.php`         | Ver su cuenta (`cuenta.php`), comprar y pagar                     |
+| `admin`   | Cuenta inicial `admin@barismo.com.ar`   | Todo lo anterior, más el panel y el CRUD de productos (`admin/`)  |
+
+### Roles
+
+| Registro de un usuario nuevo                                | Cuenta con rol `usuario`                                         |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| ![Registro](docs/capturas/roles-crud/registro.png)          | ![Cuenta](docs/capturas/roles-crud/cuenta-usuario.png)           |
+| **Usuario sin permiso para entrar al CRUD**                 | **Ruta protegida sin sesión**                                    |
+| ![Sin permiso](docs/capturas/roles-crud/usuario-sin-permiso.png) | ![Sin sesión](docs/capturas/roles-crud/acceso-denegado.png) |
+| **Panel del admin con los usuarios y sus roles**            | **Tabla `usuarios` en phpMyAdmin**                               |
+| ![Panel](docs/capturas/roles-crud/admin-panel.png)          | ![BD usuarios](docs/capturas/roles-crud/bd-usuarios.png)         |
+
+### CRUD de productos
+
+| Listado (Read)                                              | Alta (Create)                                                    |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- |
+| ![Listado](docs/capturas/roles-crud/crud-listado.png)       | ![Crear](docs/capturas/roles-crud/crud-crear.png)                |
+| **Producto agregado**                                       | **Edición (Update)**                                             |
+| ![Creado](docs/capturas/roles-crud/crud-creado.png)         | ![Editar](docs/capturas/roles-crud/crud-editar.png)              |
+| **Producto actualizado**                                    | **El cambio guardado en la tabla `productos`**                   |
+| ![Editado](docs/capturas/roles-crud/crud-editado.png)       | ![BD productos](docs/capturas/roles-crud/bd-productos.png)       |
+| **Baja (Delete)**                                           | **La tabla `productos` después de borrar**                       |
+| ![Eliminado](docs/capturas/roles-crud/crud-eliminado.png)   | ![BD eliminado](docs/capturas/roles-crud/bd-productos-eliminado.png) |
+
 ---
 
 # Documentación de diseño (TP anteriores)
